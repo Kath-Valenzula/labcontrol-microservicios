@@ -37,13 +37,19 @@ export class AuthService {
   }
 
   login(credentials: { correo: string; password: string }): Observable<Usuario> {
-    const url = `${this.config.getApiBaseUrl()}/auth/login`;
-    return this.http.post<Usuario>(url, credentials).pipe(
-      tap(user => {
-        this.currentUserSubject.next(user);
-        this.saveUserToStorage(user);
-      })
-    );
+    // DEMO: Login simulado - busca usuario por correo y permite cualquier contraseña
+    const demoUser: Usuario = {
+      id: 1,
+      nombre: 'Usuario',
+      apellido: 'Demo',
+      correo: credentials.correo,
+      telefono: '999888777',
+      fechaRegistro: new Date().toISOString().split('T')[0],
+      rol: 'ADMIN'
+    };
+    this.currentUserSubject.next(demoUser);
+    this.saveUserToStorage(demoUser);
+    return of(demoUser);
   }
 
   register(payload: Partial<Usuario> & { password: string }): Observable<Usuario> {
