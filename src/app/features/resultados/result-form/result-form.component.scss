@@ -1,0 +1,5 @@
+@import 'styles/_variables.scss';
+
+.card { border-radius:8px; }
+.btn-primary{ background:$primary; color: darken($primary, 60%); border:1px solid darken($primary,6%);} 
+.btn-secondary{ background:$secondary; color:#fff; border:none; }

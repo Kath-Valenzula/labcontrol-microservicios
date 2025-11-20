@@ -22,6 +22,16 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 
 Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
 
+## Probar endpoints con Postman
+
+1. Importa la colección desde `postman/DSY2205_labcontrol8.postman_collection.json`.
+2. Prueba los endpoints de ejemplo:
+   - Usuarios: `GET http://localhost:8080/api/usuarios`
+   - Laboratorios: `GET http://localhost:8081/api/laboratorios`
+   - Reservas: `GET http://localhost:8083/api/reservas`
+
+Puedes agregar más requests según los endpoints de tu backend.
+
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.

@@ -1,0 +1,50 @@
+<div class="card">
+  <div class="card-header">
+    <h5 class="mb-0">{{ isEdit ? 'Editar resultado' : 'Nuevo resultado' }}</h5>
+  </div>
+  <div class="card-body">
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <div class="row">
+        <div class="col-md-4 mb-3">
+          <label class="form-label" for="pacienteId">Paciente ID</label>
+          <input id="pacienteId" title="ID del paciente" placeholder="12345" class="form-control" formControlName="pacienteId" />
+          <div class="text-danger" *ngIf="form.controls['pacienteId'].touched && form.controls['pacienteId'].invalid">Este campo es obligatorio.</div>
+        </div>
+        <div class="col-md-4 mb-3">
+          <label class="form-label" for="laboratorioId">Laboratorio ID</label>
+          <input id="laboratorioId" title="ID del laboratorio" placeholder="678" class="form-control" formControlName="laboratorioId" />
+          <div class="text-danger" *ngIf="form.controls['laboratorioId'].touched && form.controls['laboratorioId'].invalid">Este campo es obligatorio.</div>
+        </div>
+        <div class="col-md-4 mb-3">
+          <label class="form-label" for="fecha">Fecha</label>
+          <input id="fecha" type="date" title="Fecha del examen" class="form-control" formControlName="fecha" />
+          <div class="text-danger" *ngIf="form.controls['fecha'].touched && form.controls['fecha'].invalid">Este campo es obligatorio.</div>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label" for="tipoExamen">Tipo de examen</label>
+        <input id="tipoExamen" title="Tipo de examen" placeholder="p.ej. Hemograma" class="form-control" formControlName="tipoExamen" />
+        <div class="text-danger" *ngIf="form.controls['tipoExamen'].touched && form.controls['tipoExamen'].invalid">Este campo es obligatorio.</div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label" for="resultado">Resultado</label>
+        <textarea id="resultado" title="Resultado del examen" placeholder="Descripción del resultado" class="form-control" formControlName="resultado" rows="3"></textarea>
+        <div class="text-danger" *ngIf="form.controls['resultado'].touched && form.controls['resultado'].invalid">Este campo es obligatorio.</div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label" for="observaciones">Observaciones</label>
+        <textarea id="observaciones" title="Observaciones" placeholder="Notas adicionales" class="form-control" formControlName="observaciones" rows="2"></textarea>
+      </div>
+
+      <div class="d-flex gap-2">
+        <button class="btn btn-primary" type="submit">Guardar</button>
+        <a class="btn btn-secondary" routerLink="/resultados">Cancelar</a>
+      </div>
+
+      <div *ngIf="error" class="text-danger mt-2">{{ error }}</div>
+    </form>
+  </div>
+</div>

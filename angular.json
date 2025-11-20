@@ -32,6 +32,11 @@
             "styles": [
               "src/styles.scss"
             ],
+              "stylePreprocessorOptions": {
+                "includePaths": [
+                  "src"
+                ]
+              },
             "scripts": [],
             "server": "src/main.server.ts",
             "prerender": true,
@@ -95,12 +100,19 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": ["src"]
+            },
             "scripts": []
           }
         }
       }
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }

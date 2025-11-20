@@ -1,0 +1,556 @@
+{
+	"info": {
+		"_postman_id": "dsy2205-api-collection-fixed",
+		"name": "DSY2205 - APIs (CORREGIDO)",
+		"description": "Colección corregida con variables dinámicas y orden de ejecución optimizado",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "username",
+				"value": "admin",
+				"type": "string"
+			},
+			{
+				"key": "password",
+				"value": "admin123",
+				"type": "string"
+			}
+		]
+	},
+	"item": [
+		{
+			"name": "Usuarios",
+			"item": [
+				{
+					"name": "GET - Listar usuarios",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    var usuarios = pm.response.json();",
+									"    if (usuarios.length > 0) {",
+									"        pm.collectionVariables.set('usuarioId', usuarios[0].idUsuario);",
+									"        console.log('ID Usuario guardado: ' + usuarios[0].idUsuario);",
+									"    }",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/usuarios",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "usuarios"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET - Usuario por id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/usuarios/{{usuarioId}}",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "usuarios", "{{usuarioId}}"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST - Crear usuario",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 201) {",
+									"    var nuevoUsuario = pm.response.json();",
+									"    pm.collectionVariables.set('nuevoUsuarioId', nuevoUsuario.idUsuario);",
+									"    console.log('Nuevo usuario creado con ID: ' + nuevoUsuario.idUsuario);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nombre\": \"Usuario Temporal Test\",\n  \"apellido\": \"Para Eliminar\",\n  \"correo\": \"temp.test.{{$randomInt}}@institucion.cl\",\n  \"telefono\": \"999888777\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/usuarios",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "usuarios"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT - Actualizar usuario",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nombre\": \"Usuario Temporal MODIFICADO\",\n  \"apellido\": \"Actualizado OK\",\n  \"correo\": \"temp.test.modificado.{{$randomInt}}@institucion.cl\",\n  \"telefono\": \"911222333\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/usuarios/{{nuevoUsuarioId}}",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "usuarios", "{{nuevoUsuarioId}}"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE - Eliminar usuario",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/usuarios/{{nuevoUsuarioId}}",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "usuarios", "{{nuevoUsuarioId}}"]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Laboratorios",
+			"item": [
+				{
+					"name": "GET - Listar laboratorios",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    var labs = pm.response.json();",
+									"    if (labs.length > 0) {",
+									"        pm.collectionVariables.set('laboratorioId', labs[0].idLab);",
+									"        console.log('ID Lab guardado: ' + labs[0].idLab);",
+									"    }",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/laboratorios",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8081",
+							"path": ["api", "laboratorios"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET - Laboratorio por id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/laboratorios/{{laboratorioId}}",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8081",
+							"path": ["api", "laboratorios", "{{laboratorioId}}"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET - Buscar laboratorio por nombre",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/laboratorios/search?nombre=Lab",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8081",
+							"path": ["api", "laboratorios", "search"],
+							"query": [
+								{
+									"key": "nombre",
+									"value": "Lab"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST - Crear laboratorio",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 201) {",
+									"    var nuevoLab = pm.response.json();",
+									"    pm.collectionVariables.set('nuevoLaboratorioId', nuevoLab.idLab);",
+									"    console.log('Nuevo lab creado con ID: ' + nuevoLab.idLab);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nombre\": \"Lab Temporal Test\",\n  \"ubicacion\": \"Para Eliminar\",\n  \"capacidad\": 99,\n  \"encargadoId\": {{usuarioId}}\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/laboratorios",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8081",
+							"path": ["api", "laboratorios"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT - Actualizar laboratorio",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nombre\": \"Lab Temporal MODIFICADO\",\n  \"ubicacion\": \"Actualizado OK\",\n  \"capacidad\": 88,\n  \"encargadoId\": {{usuarioId}}\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/laboratorios/{{nuevoLaboratorioId}}",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8081",
+							"path": ["api", "laboratorios", "{{nuevoLaboratorioId}}"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE - Eliminar laboratorio",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/laboratorios/{{nuevoLaboratorioId}}",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8081",
+							"path": ["api", "laboratorios", "{{nuevoLaboratorioId}}"]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Reservas",
+			"item": [
+				{
+					"name": "GET - Listar reservas",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    var reservas = pm.response.json();",
+									"    if (reservas.length > 0) {",
+									"        pm.collectionVariables.set('reservaId', reservas[0].idReserva);",
+									"        console.log('ID Reserva guardado: ' + reservas[0].idReserva);",
+									"    }",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8083/api/reservas",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8083",
+							"path": ["api", "reservas"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET - Reserva por id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8083/api/reservas/{{reservaId}}",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8083",
+							"path": ["api", "reservas", "{{reservaId}}"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET - Buscar reservas por usuario",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8083/api/reservas/buscar/usuario?id={{usuarioId}}",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8083",
+							"path": ["api", "reservas", "buscar", "usuario"],
+							"query": [
+								{
+									"key": "id",
+									"value": "{{usuarioId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET - Buscar reservas por lab",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8083/api/reservas/buscar/lab?id={{laboratorioId}}",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8083",
+							"path": ["api", "reservas", "buscar", "lab"],
+							"query": [
+								{
+									"key": "id",
+									"value": "{{laboratorioId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET - Buscar reservas por día",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8083/api/reservas/buscar/fecha?dia=2025-11-20",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8083",
+							"path": ["api", "reservas", "buscar", "fecha"],
+							"query": [
+								{
+									"key": "dia",
+									"value": "2025-11-20"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET - Buscar reservas por rango",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8083/api/reservas/buscar/rango?desde=2025-11-01&hasta=2025-11-30",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8083",
+							"path": ["api", "reservas", "buscar", "rango"],
+							"query": [
+								{
+									"key": "desde",
+									"value": "2025-11-01"
+								},
+								{
+									"key": "hasta",
+									"value": "2025-11-30"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST - Crear reserva",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 201) {",
+									"    var nuevaReserva = pm.response.json();",
+									"    pm.collectionVariables.set('nuevaReservaId', nuevaReserva.idReserva);",
+									"    console.log('Nueva reserva creada con ID: ' + nuevaReserva.idReserva);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"idUsuario\": {{usuarioId}},\n  \"idLab\": {{laboratorioId}},\n  \"fecha\": \"2025-12-31\",\n  \"horaInicio\": \"10:00\",\n  \"horaFin\": \"12:00\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8083/api/reservas",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8083",
+							"path": ["api", "reservas"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT - Actualizar reserva",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"idUsuario\": {{usuarioId}},\n  \"idLab\": {{laboratorioId}},\n  \"fecha\": \"2025-12-31\",\n  \"horaInicio\": \"14:00\",\n  \"horaFin\": \"18:00\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8083/api/reservas/{{nuevaReservaId}}",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8083",
+							"path": ["api", "reservas", "{{nuevaReservaId}}"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE - Eliminar reserva",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8083/api/reservas/{{nuevaReservaId}}",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8083",
+							"path": ["api", "reservas", "{{nuevaReservaId}}"]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "usuarioId",
+			"value": "1"
+		},
+		{
+			"key": "nuevoUsuarioId",
+			"value": ""
+		},
+		{
+			"key": "laboratorioId",
+			"value": "1"
+		},
+		{
+			"key": "nuevoLaboratorioId",
+			"value": ""
+		},
+		{
+			"key": "reservaId",
+			"value": "1"
+		},
+		{
+			"key": "nuevaReservaId",
+			"value": ""
+		}
+	]
+}

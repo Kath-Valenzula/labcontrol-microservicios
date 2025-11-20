@@ -1,0 +1,79 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-8 col-lg-6">
+      <div class="card auth-card">
+        <div class="card-body">
+          <h2 class="h5">Registro</h2>
+          <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+    <div class="row">
+      <div class="col-12 col-md-6 mb-3">
+        <div class="form-group">
+          <label for="nombre">Nombre</label>
+          <input id="nombre" title="Nombre" placeholder="Nombre" class="form-control" formControlName="nombre" />
+          <div class="error text-danger" *ngIf="f['nombre'].touched && f['nombre'].invalid">Este campo es obligatorio.</div>
+        </div>
+      </div>
+      <div class="col-12 col-md-6 mb-3">
+        <div class="form-group">
+          <label for="apellido">Apellido</label>
+          <input id="apellido" title="Apellido" placeholder="Apellido" class="form-control" formControlName="apellido" />
+          <div class="error text-danger" *ngIf="f['apellido'].touched && f['apellido'].invalid">Este campo es obligatorio.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="correo">Correo</label>
+      <input id="correo" title="Correo electrónico" placeholder="usuario&#64;dominio.cl" formControlName="correo" type="email" />
+        <div class="error" *ngIf="f['correo'].touched && f['correo'].invalid">
+          <div *ngIf="f['correo'].errors?.['required']">Este campo es obligatorio.</div>
+          <div *ngIf="f['correo'].errors?.['email']">El correo debe tener formato usuario&#64;dominio.cl.</div>
+        </div>
+    </div>
+
+    <div class="form-group">
+      <label for="telefono">Teléfono</label>
+      <input id="telefono" title="Teléfono" placeholder="+56 9 1234 5678" formControlName="telefono" />
+    </div>
+
+    <div class="form-group">
+      <label for="rol">Rol</label>
+      <select id="rol" title="Rol" formControlName="rol">
+        <option value="PATIENT">Paciente</option>
+        <option value="MEDICO">Médico</option>
+        <option value="ADMIN">Administrador</option>
+      </select>
+    </div>
+
+    <div formGroupName="passwords" class="form-group">
+      <label for="password">Contraseña</label>
+      <input id="password" title="Contraseña" placeholder="Al menos 8 caracteres, mayúscula, minúscula, número y símbolo" type="password" formControlName="password" />
+        <div class="error" *ngIf="p['password'].touched && p['password'].invalid">
+          <div *ngIf="p['password'].errors?.['required']">Este campo es obligatorio.</div>
+          <div *ngIf="p['password'].errors?.['minlength']">La contraseña debe tener al menos 8 caracteres.</div>
+          <div *ngIf="p['password'].errors?.['pattern'] && !p['password'].errors?.['minlength']">
+            <div *ngIf="!hasUpper()">Debe contener al menos una letra mayúscula.</div>
+            <div *ngIf="!hasLower()">Debe contener al menos una letra minúscula.</div>
+            <div *ngIf="!hasNumber()">Debe contener al menos un número.</div>
+            <div *ngIf="!hasSymbol()">Debe contener al menos un símbolo.</div>
+          </div>
+        </div>
+
+      <label for="confirmPassword">Confirmar contraseña</label>
+      <input id="confirmPassword" title="Confirmar contraseña" placeholder="Repite la contraseña" type="password" formControlName="confirmPassword" />
+        <div class="error" *ngIf="(p['confirmPassword'].touched || form.get('passwords')?.touched) && form.get('passwords')?.errors?.['mismatch']">Las contraseñas no coinciden.</div>
+    </div>
+
+            <div class="d-flex gap-2">
+              <button class="btn btn-primary" type="submit" [disabled]="loading || form.invalid">Registrar</button>
+              <a routerLink="/auth/login" class="btn btn-secondary">Volver a iniciar sesión</a>
+            </div>
+
+            <div class="text-success mt-2" *ngIf="successMsg">{{ successMsg }}</div>
+            <div class="text-danger mt-2" *ngIf="error">{{ error }}</div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

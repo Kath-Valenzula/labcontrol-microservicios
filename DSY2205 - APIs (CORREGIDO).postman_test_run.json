@@ -1,0 +1,462 @@
+{
+	"id": "65c01a3e-1fa9-437d-816a-11d47bab7130",
+	"name": "DSY2205 - APIs (CORREGIDO)",
+	"timestamp": "2025-11-20T15:19:09.060Z",
+	"collection_id": "45172943-6ad2701f-dfdc-41eb-8c74-7b1418a14509",
+	"folder_id": 0,
+	"environment_id": "45172943-facbd963-ebce-49ab-b1e8-370564d50aef",
+	"totalPass": 0,
+	"delay": 0,
+	"persist": true,
+	"status": "finished",
+	"startedAt": "2025-11-20T15:19:04.581Z",
+	"totalFail": 0,
+	"results": [
+		{
+			"id": "f0e83261-f971-4819-8235-f7a8bbb2e54a",
+			"name": "GET - Listar usuarios",
+			"url": "http://localhost:8080/api/usuarios",
+			"time": 88,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				88
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "fc81d400-e5cb-4fa9-884c-17c970f39dfa",
+			"name": "GET - Usuario por id",
+			"url": "http://localhost:8080/api/usuarios/42",
+			"time": 273,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				273
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "0d4333af-d70f-4d9a-9613-a6fec2dcb3db",
+			"name": "POST - Crear usuario",
+			"url": "http://localhost:8080/api/usuarios",
+			"time": 140,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				140
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "b07dc688-e48f-4eed-9637-9ccff58702af",
+			"name": "PUT - Actualizar usuario",
+			"url": "http://localhost:8080/api/usuarios/54",
+			"time": 206,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				206
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "eda88852-5250-4016-a72b-19017292d043",
+			"name": "DELETE - Eliminar usuario",
+			"url": "http://localhost:8080/api/usuarios/54",
+			"time": 185,
+			"responseCode": {
+				"code": 204,
+				"name": "No Content"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				185
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "974fd03a-bd62-4660-a259-77af824916e9",
+			"name": "GET - Listar laboratorios",
+			"url": "http://localhost:8081/api/laboratorios",
+			"time": 130,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				130
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "fe02f563-213e-47ed-b1f7-eecaad032e28",
+			"name": "GET - Laboratorio por id",
+			"url": "http://localhost:8081/api/laboratorios/21",
+			"time": 133,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				133
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "ad0c1927-3aae-416c-90de-ccc96cb807fe",
+			"name": "GET - Buscar laboratorio por nombre",
+			"url": "http://localhost:8081/api/laboratorios/search?nombre=Lab",
+			"time": 141,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				141
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "0f88f71c-6372-410f-8d97-8c410a06ef41",
+			"name": "POST - Crear laboratorio",
+			"url": "http://localhost:8081/api/laboratorios",
+			"time": 135,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				135
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "d83df0a3-7352-45c2-a804-a0d1d1b7f92e",
+			"name": "PUT - Actualizar laboratorio",
+			"url": "http://localhost:8081/api/laboratorios/27",
+			"time": 170,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				170
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "8df791dc-d78b-41fe-b737-ac302d4a0d06",
+			"name": "DELETE - Eliminar laboratorio",
+			"url": "http://localhost:8081/api/laboratorios/27",
+			"time": 146,
+			"responseCode": {
+				"code": 204,
+				"name": "No Content"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				146
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "30f5f01e-9b9c-4e34-a5cc-0e31b5321ff8",
+			"name": "GET - Listar reservas",
+			"url": "http://localhost:8083/api/reservas",
+			"time": 86,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				86
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "b17e8978-aa51-46ce-9e3b-7b0c9c0944d0",
+			"name": "GET - Reserva por id",
+			"url": "http://localhost:8083/api/reservas/21",
+			"time": 86,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				86
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "f4bec891-326f-4b51-a4d2-776a96b203be",
+			"name": "GET - Buscar reservas por usuario",
+			"url": "http://localhost:8083/api/reservas/buscar/usuario?id=42",
+			"time": 82,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				82
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "65fbe59c-124b-4963-9b0a-dff69cb9597c",
+			"name": "GET - Buscar reservas por lab",
+			"url": "http://localhost:8083/api/reservas/buscar/lab?id=21",
+			"time": 83,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				83
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "4718038b-9487-4338-bc81-81e78005927e",
+			"name": "GET - Buscar reservas por día",
+			"url": "http://localhost:8083/api/reservas/buscar/fecha?dia=2025-11-20",
+			"time": 82,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				82
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "bfd733f1-5763-4e2c-b439-e38852a224ed",
+			"name": "GET - Buscar reservas por rango",
+			"url": "http://localhost:8083/api/reservas/buscar/rango?desde=2025-11-01&hasta=2025-11-30",
+			"time": 81,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				81
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "21b64855-8407-4d9a-adc4-9c98421fc6c7",
+			"name": "POST - Crear reserva",
+			"url": "http://localhost:8083/api/reservas",
+			"time": 99,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				99
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "fd7ec33b-daee-424e-9197-54621b2d7efd",
+			"name": "PUT - Actualizar reserva",
+			"url": "http://localhost:8083/api/reservas/26",
+			"time": 105,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				105
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "43a9bae0-5491-4cb5-8c14-cc8a7ebd5f55",
+			"name": "DELETE - Eliminar reserva",
+			"url": "http://localhost:8083/api/reservas/26",
+			"time": 110,
+			"responseCode": {
+				"code": 204,
+				"name": "No Content"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				110
+			],
+			"allTests": [
+				{}
+			]
+		}
+	],
+	"count": 1,
+	"totalTime": 2561,
+	"collection": {
+		"requests": [
+			{
+				"id": "f0e83261-f971-4819-8235-f7a8bbb2e54a",
+				"method": "GET"
+			},
+			{
+				"id": "fc81d400-e5cb-4fa9-884c-17c970f39dfa",
+				"method": "GET"
+			},
+			{
+				"id": "0d4333af-d70f-4d9a-9613-a6fec2dcb3db",
+				"method": "POST"
+			},
+			{
+				"id": "b07dc688-e48f-4eed-9637-9ccff58702af",
+				"method": "PUT"
+			},
+			{
+				"id": "eda88852-5250-4016-a72b-19017292d043",
+				"method": "DELETE"
+			},
+			{
+				"id": "974fd03a-bd62-4660-a259-77af824916e9",
+				"method": "GET"
+			},
+			{
+				"id": "fe02f563-213e-47ed-b1f7-eecaad032e28",
+				"method": "GET"
+			},
+			{
+				"id": "ad0c1927-3aae-416c-90de-ccc96cb807fe",
+				"method": "GET"
+			},
+			{
+				"id": "0f88f71c-6372-410f-8d97-8c410a06ef41",
+				"method": "POST"
+			},
+			{
+				"id": "d83df0a3-7352-45c2-a804-a0d1d1b7f92e",
+				"method": "PUT"
+			},
+			{
+				"id": "8df791dc-d78b-41fe-b737-ac302d4a0d06",
+				"method": "DELETE"
+			},
+			{
+				"id": "30f5f01e-9b9c-4e34-a5cc-0e31b5321ff8",
+				"method": "GET"
+			},
+			{
+				"id": "b17e8978-aa51-46ce-9e3b-7b0c9c0944d0",
+				"method": "GET"
+			},
+			{
+				"id": "f4bec891-326f-4b51-a4d2-776a96b203be",
+				"method": "GET"
+			},
+			{
+				"id": "65fbe59c-124b-4963-9b0a-dff69cb9597c",
+				"method": "GET"
+			},
+			{
+				"id": "4718038b-9487-4338-bc81-81e78005927e",
+				"method": "GET"
+			},
+			{
+				"id": "bfd733f1-5763-4e2c-b439-e38852a224ed",
+				"method": "GET"
+			},
+			{
+				"id": "21b64855-8407-4d9a-adc4-9c98421fc6c7",
+				"method": "POST"
+			},
+			{
+				"id": "fd7ec33b-daee-424e-9197-54621b2d7efd",
+				"method": "PUT"
+			},
+			{
+				"id": "43a9bae0-5491-4cb5-8c14-cc8a7ebd5f55",
+				"method": "DELETE"
+			}
+		]
+	}
+}
