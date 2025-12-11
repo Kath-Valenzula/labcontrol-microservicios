@@ -1,0 +1,105 @@
+@import 'styles/_variables.scss';
+
+.dash-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.dash-card {
+  background: $card;
+  border: 1px solid lighten($primary, 48%);
+  border-radius: 14px;
+  padding: 1rem;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
+}
+
+.dash-card.kpi .label {
+  color: $muted;
+  font-size: 0.9rem;
+}
+
+.dash-card.kpi .value {
+  font-weight: 800;
+  font-size: 2rem;
+  color: $primary;
+}
+
+.dash-card.kpi .value.ok {
+  color: $success;
+}
+
+.dash-card .hint {
+  color: $muted;
+}
+
+.dash-section {
+  margin-top: 1.75rem;
+}
+
+.section-head h2 {
+  margin: 0;
+}
+
+.section-head .hint {
+  color: $muted;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: $muted;
+  font-size: 0.8rem;
+  margin: 0;
+}
+
+.action-card {
+  display: block;
+  height: 100%;
+  padding: 1rem 1.1rem;
+  border-radius: 12px;
+  border: 1px solid lighten($secondary, 35%);
+  background: linear-gradient(150deg, lighten($secondary, 42%), #fff);
+  text-decoration: none;
+  color: #12202c;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.05);
+}
+
+.action-card .title {
+  font-weight: 700;
+}
+
+.action-card .desc {
+  color: $muted;
+  margin-bottom: 0.35rem;
+}
+
+.action-card .cta {
+  font-weight: 700;
+  color: $primary;
+}
+
+.check-card {
+  background: $card;
+  border: 1px solid lighten($primary, 45%);
+  border-radius: 12px;
+  padding: 1rem;
+  height: 100%;
+  position: relative;
+}
+
+.check-card .title {
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+}
+
+.check-card .desc {
+  color: $muted;
+  margin-bottom: 0.5rem;
+}
+
+@media (max-width: $bp-tablet) {
+  .dash-grid {
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  }
+}

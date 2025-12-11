@@ -8,7 +8,7 @@ import { ConfigService } from './config.service';
 export class ResultadosService {
   private base: string;
   constructor(private http: HttpClient, private config: ConfigService) {
-    this.base = `${this.config.getApiBaseUrl()}/resultados`;
+    this.base = `${this.config.getResultadosBaseUrl()}/resultados`;
   }
 
   getAll(): Observable<ResultadoAnalisis[]> {

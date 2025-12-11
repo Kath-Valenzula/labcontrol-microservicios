@@ -22,7 +22,8 @@ export class ProfileComponent implements OnInit {
       nombre: ['', [Validators.required, Validators.minLength(2)]],
       apellido: ['', [Validators.required, Validators.minLength(2)]],
       correo: ['', [Validators.required, Validators.email]],
-      telefono: ['', [Validators.maxLength(30)]]
+      telefono: ['', [Validators.maxLength(30)]],
+      rol: [{ value: '', disabled: true }]
     });
   }
 
@@ -33,12 +34,17 @@ export class ProfileComponent implements OnInit {
         nombre: user.nombre,
         apellido: user.apellido,
         correo: user.correo,
-        telefono: user.telefono || ''
+        telefono: user.telefono || '',
+        rol: user.rol || ''
       });
     }
   }
 
   get f() { return this.form.controls; }
+  get initials(): string {
+    const n = this.form.getRawValue();
+    return `${(n.nombre || 'U')[0] ?? ''}${(n.apellido || 'N')[0] ?? ''}`.toUpperCase();
+  }
 
   cancel() {
     const user = this.auth.currentUserValue;
@@ -47,7 +53,8 @@ export class ProfileComponent implements OnInit {
         nombre: user.nombre,
         apellido: user.apellido,
         correo: user.correo,
-        telefono: user.telefono || ''
+        telefono: user.telefono || '',
+        rol: user.rol || ''
       });
     }
     this.success = null; this.error = null;

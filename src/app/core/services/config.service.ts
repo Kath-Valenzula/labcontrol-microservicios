@@ -10,12 +10,27 @@ declare global {
 @Injectable({ providedIn: 'root' })
 export class ConfigService {
   getApiBaseUrl(): string {
+    return this.fromWindow('API_BASE_URL') || environment.apiBaseUrl;
+  }
+
+  getUsuariosBaseUrl(): string {
+    return this.fromWindow('API_USUARIOS') || (environment as any).apiUsuarios || this.getApiBaseUrl();
+  }
+
+  getLaboratoriosBaseUrl(): string {
+    return this.fromWindow('API_LABORATORIOS') || (environment as any).apiLaboratorios || this.getApiBaseUrl();
+  }
+
+  getResultadosBaseUrl(): string {
+    return this.fromWindow('API_RESULTADOS') || (environment as any).apiResultados || this.getApiBaseUrl();
+  }
+
+  private fromWindow(key: string): string | null {
     const env = (window as any).__env;
-    const val = env?.API_BASE_URL;
-    // Si existe una URL configurada, usarla; si no, usar la URL por defecto
+    const val = env?.[key];
     if (val && typeof val === 'string' && !val.startsWith('__')) {
       return val;
     }
-    return environment.apiBaseUrl;
+    return null;
   }
 }

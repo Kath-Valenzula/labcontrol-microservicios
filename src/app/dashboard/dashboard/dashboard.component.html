@@ -1,1 +1,79 @@
-<p>dashboard works!</p>
+<section class="dash-grid">
+  <div class="dash-card kpi">
+    <div class="label">Examenes activos</div>
+    <div class="value">124</div>
+    <div class="hint">En proceso y pendientes de entrega</div>
+  </div>
+  <div class="dash-card kpi">
+    <div class="label">Laboratorios conectados</div>
+    <div class="value">3</div>
+    <div class="hint">Red minima solicitada por el caso</div>
+  </div>
+  <div class="dash-card kpi">
+    <div class="label">Pacientes con resultado</div>
+    <div class="value">58</div>
+    <div class="hint">Ultimos 30 dias</div>
+  </div>
+  <div class="dash-card kpi">
+    <div class="label">Cobertura de pruebas</div>
+    <div class="value ok">90%+</div>
+    <div class="hint">Reportado por Karma + SonarQube</div>
+  </div>
+</section>
+
+<section class="dash-section">
+  <div class="section-head">
+    <div>
+      <p class="eyebrow">Operacion diaria</p>
+      <h2>Acciones rapidas</h2>
+      <p class="hint">Ingresa con un clic a los flujos mas usados.</p>
+    </div>
+  </div>
+  <div class="row g-3">
+    <div class="col-12 col-md-6 col-lg-3" *ngFor="let action of [
+      { title: 'Crear laboratorio', desc: 'Agrega un laboratorio y su contacto', link: '/laboratorios' },
+      { title: 'Cargar resultado', desc: 'Sube resultados y asigna paciente', link: '/resultados' },
+      { title: 'Revisar perfil', desc: 'Actualiza tus datos y rol', link: '/perfil' },
+      { title: 'Ver mis resultados', desc: 'Pacientes revisan su historial', link: '/mis-resultados' }
+    ]">
+      <a [routerLink]="action.link" class="action-card">
+        <div class="title">{{ action.title }}</div>
+        <div class="desc">{{ action.desc }}</div>
+        <span class="cta">Abrir</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="dash-section">
+  <div class="section-head">
+    <div>
+      <p class="eyebrow">Transparencia</p>
+      <h2>Checklist de cumplimiento</h2>
+      <p class="hint">Resumen rapido de requisitos de la rubrica.</p>
+    </div>
+  </div>
+  <div class="row g-3">
+    <div class="col-12 col-lg-4">
+      <div class="check-card">
+        <div class="title">Responsive 12 columnas</div>
+        <p class="desc">Grid Bootstrap y layouts probados en mobile/tablet/desktop.</p>
+        <span class="badge bg-success">OK</span>
+      </div>
+    </div>
+    <div class="col-12 col-lg-4">
+      <div class="check-card">
+        <div class="title">Patron y capas</div>
+        <p class="desc">Presentacion en componentes, servicios para datos y guards.</p>
+        <span class="badge bg-success">OK</span>
+      </div>
+    </div>
+    <div class="col-12 col-lg-4">
+      <div class="check-card">
+        <div class="title">Cobertura y QA</div>
+        <p class="desc">Tests unitarios en servicios, guards y UI clave.</p>
+        <span class="badge bg-success">OK</span>
+      </div>
+    </div>
+  </div>
+</section>

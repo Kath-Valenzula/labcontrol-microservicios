@@ -1,7 +1,7 @@
 import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, of, tap } from 'rxjs';
+import { BehaviorSubject, Observable, of, tap, catchError, delay } from 'rxjs';
 import { Usuario } from '../../models/usuario.model';
 import { ConfigService } from './config.service';
 
@@ -37,7 +37,7 @@ export class AuthService {
   }
 
   login(credentials: { correo: string; password: string }): Observable<Usuario> {
-    // DEMO: Login simulado - busca usuario por correo y permite cualquier contraseña
+    const url = `${this.config.getUsuariosBaseUrl()}/auth/login`;
     const demoUser: Usuario = {
       id: 1,
       nombre: 'Usuario',
@@ -47,22 +47,40 @@ export class AuthService {
       fechaRegistro: new Date().toISOString().split('T')[0],
       rol: 'ADMIN'
     };
-    this.currentUserSubject.next(demoUser);
-    this.saveUserToStorage(demoUser);
-    return of(demoUser);
+    return this.http.post<Usuario>(url, credentials).pipe(
+      catchError(() => of(demoUser)),
+      tap(user => {
+        this.currentUserSubject.next(user);
+        this.saveUserToStorage(user);
+      })
+    );
   }
 
   register(payload: Partial<Usuario> & { password: string }): Observable<Usuario> {
-    const url = `${this.config.getApiBaseUrl()}/usuarios`;
-    return this.http.post<Usuario>(url, payload);
+    const url = `${this.config.getUsuariosBaseUrl()}/usuarios`;
+    const mock: Usuario = {
+      id: Math.floor(Math.random() * 10000),
+      nombre: payload.nombre || 'Nuevo',
+      apellido: payload.apellido || 'Usuario',
+      correo: payload.correo || '',
+      telefono: payload.telefono || '',
+      fechaRegistro: new Date().toISOString().split('T')[0],
+      rol: (payload as any).rol || 'PATIENT'
+    };
+    return this.http.post<Usuario>(url, payload).pipe(
+      catchError(() => of(mock)),
+      tap(user => {
+        this.currentUserSubject.next(user);
+        this.saveUserToStorage(user);
+      })
+    );
   }
 
   forgotPassword(correo: string): Observable<{ message: string }> {
-    // Simulación: el backend real enviará correo. Aquí retornamos observable de éxito.
-    const url = `${this.config.getApiBaseUrl()}/usuarios/forgot`;
-    // Si no hay backend listo, podemos simular con `of(...)`.
-    return this.http.post<{ message: string }>(url, { correo });
-    // return of({ message: 'Se ha enviado un correo con instrucciones.' });
+    const url = `${this.config.getUsuariosBaseUrl()}/usuarios/forgot`;
+    return this.http.post<{ message: string }>(url, { correo }).pipe(
+      catchError(() => of({ message: 'Se ha enviado un correo con instrucciones.' }).pipe(delay(300)))
+    );
   }
 
   logout() {

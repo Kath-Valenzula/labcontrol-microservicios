@@ -1,156 +1,214 @@
 @import 'styles/_variables.scss';
 
-.lc-layout {
-  display: flex;
+.lc-shell {
   min-height: 100vh;
-  background: lighten($primary, 42%);
+  background: $surface;
+  color: #1f2a33;
 }
 
-.lc-sidebar {
-  width: 260px;
-  background: $primary;
-  color: darken($primary, 60%);
-  display: flex;
-  flex-direction: column;
-  padding: 1.5rem 1rem;
-}
-
-.lc-logo {
-  margin-bottom: 2rem;
-}
-
-.lc-logo-main {
-  display: block;
-  font-weight: 700;
-  font-size: 1.4rem;
-  color: $secondary;
-}
-
-.lc-logo-sub {
-  font-size: 0.8rem;
-  color: lighten($secondary, 8%);
-}
-
-.lc-menu {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  margin-bottom: auto;
-}
-
-.lc-menu a {
-  text-decoration: none;
-  padding: 0.6rem 0.8rem;
-  border-radius: 0.5rem;
-  font-size: 0.95rem;
-  color: darken($secondary, 10%);
-}
-
-.lc-menu a:hover,
-.lc-menu a.active {
-  background: $secondary;
+.lc-header {
+  background: linear-gradient(135deg, $primary 0%, darken($primary, 8%) 55%, $secondary 100%);
   color: #fff;
-}
-
-.lc-footer {
-  margin-top: 2rem;
-}
-
-.btn-logout {
-  width: 100%;
-  border: none;
-  padding: 0.6rem 0.8rem;
-  border-radius: 0.5rem;
-  background: $danger;
-  color: #fff;
-  cursor: pointer;
-  font-size: 0.9rem;
-}
-
-.lc-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
+  padding: 1.25rem 0 0;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
 }
 
 .lc-topbar {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 0.8rem 1.5rem;
-  border-bottom: 1px solid lighten($primary, 34%);
-  background: lighten($tertiary, 36%);
+  justify-content: space-between;
+  gap: 1rem;
 }
 
-.lc-topbar h1 {
-  font-size: 1.2rem;
-  margin: 0;
+.lc-brand {
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  font-size: 1.35rem;
+}
+
+.lc-claim {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.lc-link {
+  color: #e2f7ff;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.lc-link:hover {
+  text-decoration: underline;
+}
+
+.btn-icon {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
 }
 
 .lc-user-badge {
-  font-size: 0.85rem;
-  padding: 0.2rem 0.6rem;
+  padding: 0.35rem 0.75rem;
   border-radius: 999px;
-  background: lighten($tertiary, 30%);
-  color: $secondary;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  font-weight: 600;
 }
 
-.lc-main {
-  padding: 1.5rem;
+.lc-hero {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 1.5rem;
+  align-items: center;
+  padding: 1.5rem 0 2.25rem;
 }
 
-/* Responsive: sidebar colapsa en móviles */
-@media (max-width: 768px) {
-  .lc-layout {
-    flex-direction: column;
-  }
+.lc-hero h1 {
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+}
 
-  .lc-sidebar {
-    width: 100%;
-    flex-direction: row;
-    align-items: center;
-    gap: 1rem;
-  }
+.lc-hero-text {
+  color: rgba(255, 255, 255, 0.9);
+  max-width: 720px;
+}
 
-  .lc-menu {
-    flex-direction: row;
-    flex-wrap: wrap;
-    margin-bottom: 0;
-  }
+.lc-hero-kicker {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.8);
+}
 
-  .lc-content {
-    width: 100%;
-  }
+.lc-hero-stats {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.stat-card {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  padding: 0.9rem 1rem;
+  backdrop-filter: blur(4px);
+}
+
+.stat-card .label {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.stat-card .value {
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+
+.lc-body {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  min-height: calc(100vh - 220px);
 }
 
 .lc-sidebar {
-  background: $primary;
-  color: #222;
-  transition: width 200ms ease, transform 200ms ease;
+  background: $card;
+  padding: 1.5rem 1.25rem;
+  border-right: 1px solid lighten($primary, 45%);
+  position: relative;
+  transition: transform 200ms ease;
 }
 
 .lc-sidebar.collapsed {
   transform: translateX(-100%);
 }
 
-.lc-topbar {
-  background: lighten($tertiary, 36%);
+.lc-logo-main {
+  font-weight: 700;
+  color: $primary;
+  font-size: 1.1rem;
+}
+
+.lc-logo-sub {
+  color: $muted;
+  font-size: 0.85rem;
+}
+
+.lc-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+}
+
+.lc-menu a {
+  text-decoration: none;
+  padding: 0.7rem 0.9rem;
+  border-radius: 10px;
+  color: $primary;
+  font-weight: 600;
+  border: 1px solid transparent;
+  transition: all 150ms ease;
+}
+
+.lc-menu a:hover {
+  background: lighten($secondary, 44%);
+  color: darken($primary, 10%);
+  border-color: lighten($secondary, 30%);
+}
+
+.lc-menu a.active {
+  background: $secondary;
+  color: #fff;
+  box-shadow: 0 6px 20px rgba(15, 163, 177, 0.25);
+}
+
+.lc-footer {
+  margin-top: auto;
 }
 
 .btn-logout {
+  width: 100%;
+  border: none;
+  padding: 0.7rem 0.9rem;
+  border-radius: 10px;
   background: $danger;
   color: #fff;
+  font-weight: 600;
+  box-shadow: 0 6px 18px rgba($danger, 0.2);
 }
 
-.btn-hamburger {
-  background: transparent;
-  border: none;
-  font-size: 1.2rem;
+.lc-main {
+  padding: 1.75rem;
 }
 
-.lc-user-badge{
-  background: rgba(85,107,47,0.12);
-  color: $secondary;
-  padding: 0.35rem 0.6rem;
-  border-radius: 999px;
+.separator {
+  opacity: 0.65;
+}
+
+@media (max-width: $bp-tablet) {
+  .lc-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .lc-body {
+    grid-template-columns: 1fr;
+  }
+
+  .lc-sidebar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    z-index: 10;
+    width: 260px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+    transform: translateX(-100%);
+  }
+
+  .lc-sidebar.collapsed {
+    transform: translateX(0);
+  }
 }

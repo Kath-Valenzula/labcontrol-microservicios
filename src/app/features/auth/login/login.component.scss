@@ -1,30 +1,52 @@
 @import 'styles/_variables.scss';
 
-.auth-card {
-  max-width: 420px;
-  margin: 24px auto;
-  padding: 20px;
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-
-  h2 { color: $secondary; margin-bottom: 12px; }
-
-  .form-group { margin-bottom: 12px;
-    label { display:block; font-weight:600; margin-bottom:6px; }
-    input { width:100%; padding:8px; border-radius:4px; border:1px solid #ddd; }
-    .error { color: $danger; font-size: 0.9rem; margin-top:6px; }
-  }
-
-  .actions { display:flex; align-items:center; gap:12px; margin-top:8px;
-    .btn.primary { background: $primary; border: 1px solid darken($primary, 6%); color: darken($primary, 60%); padding:8px 14px; border-radius:4px; }
-    .link { color: $secondary; font-size:0.95rem; }
-  }
-
-  .global { margin-top:10px; }
-  .register { margin-top:12px; font-size:0.95rem; }
+.auth-shell {
+  padding-top: 1.5rem;
 }
 
-@media (max-width: 600px) {
-  .auth-card { margin: 12px; padding: 16px; }
+.auth-card {
+  background: $card;
+  border-radius: 16px;
+  padding: 1.5rem 1.75rem;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.08);
+  border: 1px solid lighten($primary, 45%);
+}
+
+.auth-header h2 {
+  margin-bottom: 0.25rem;
+}
+
+.auth-header .subtitle {
+  color: $muted;
+}
+
+.auth-form label {
+  font-weight: 700;
+}
+
+.auth-footer {
+  margin-top: 1rem;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  gap: 0.4rem;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: $muted;
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+.link {
+  color: $primary;
+  font-weight: 600;
+}
+
+@media (max-width: $bp-tablet) {
+  .auth-card {
+    padding: 1.25rem;
+  }
 }

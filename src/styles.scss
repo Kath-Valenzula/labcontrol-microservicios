@@ -1,2 +1,27 @@
 @import "./styles/_variables.scss";
 @import "bootstrap/dist/css/bootstrap.min.css";
+
+body {
+  font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background: $surface;
+  color: #1f2a33;
+}
+
+.btn-primary {
+  background: $primary;
+  border-color: darken($primary, 8%);
+}
+
+.btn-outline-primary {
+  color: $primary;
+  border-color: $primary;
+}
+
+.btn-primary:hover,
+.btn-outline-primary:hover {
+  box-shadow: 0 10px 22px rgba($primary, 0.25);
+}
+
+.badge.bg-success {
+  background: $success;
+}

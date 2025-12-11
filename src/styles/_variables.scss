@@ -1,8 +1,12 @@
-// Paleta centralizada para LabControl 8
-$primary: #f8cbd7;   // rosa pálido
-$secondary: #556b2f; // verde musgo
-$tertiary: #cfa43a;  // dorado
-$danger: #e53935;    // error / peligro
+// Paleta centralizada para LabControl 8 (look institucional morado/fucsia)
+$primary: #4b2b73;     // morado
+$secondary: #d63384;   // fucsia
+$muted: #6c7080;       // texto secundario
+$surface: #f7f3fb;     // fondo secciones
+$card: #ffffff;        // tarjetas
+$danger: #e23d4a;      // error / peligro
+$success: #27ae60;     // éxito
+$warning: #f5a524;     // advertencia
 
 // Breakpoints base
 $bp-mobile: 576px;

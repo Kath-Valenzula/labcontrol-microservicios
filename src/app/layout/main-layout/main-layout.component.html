@@ -1,38 +1,78 @@
-<div class="lc-layout">
-  <aside class="lc-sidebar" [class.collapsed]="isCollapsed" role="navigation" aria-label="Menú principal">
-    <div class="lc-logo d-flex align-items-center justify-content-between">
+<div class="lc-shell">
+  <header class="lc-header">
+    <div class="lc-topbar container-fluid">
+      <div class="d-flex align-items-center gap-3">
+        <button class="btn-icon d-lg-none" (click)="toggleSidebar()" aria-label="Abrir menu">&#9776;</button>
+        <div>
+          <div class="lc-brand">LabControl 8</div>
+          <div class="lc-claim">Gestion integral de laboratorios y resultados clinicos</div>
+        </div>
+      </div>
+      <div class="d-flex flex-wrap align-items-center gap-3">
+        <div class="lc-quick d-none d-md-flex gap-2 align-items-center">
+          <a class="lc-link" href="tel:+56224905500">+56 2 490 5500</a>
+          <span class="separator">·</span>
+          <a class="lc-link" href="mailto:contacto&#64;labcontrol.cl">contacto&#64;labcontrol.cl</a>
+          <span class="separator">·</span>
+          <a class="lc-link" routerLink="/perfil">Soporte y perfil</a>
+        </div>
+        <span class="lc-user-badge">{{ currentUserName || 'Usuario' }}</span>
+        <button class="btn btn-outline-light btn-sm" (click)="logout()">Cerrar sesion</button>
+      </div>
+    </div>
+
+    <div class="lc-hero container">
       <div>
-        <span class="lc-logo-main">LabControl 8</span>
-        <div class="lc-logo-sub">Gestión integral de laboratorios y resultados clínicos</div>
+        <p class="lc-hero-kicker">Salud digital · Traza completa de examenes</p>
+        <h1>Tu panel institucional para laboratorios y resultados</h1>
+        <p class="lc-hero-text">
+          Monitorea examenes, coordina laboratorios y entrega resultados seguros para pacientes,
+          medicos y administradores en un mismo lugar.
+        </p>
+        <div class="d-flex flex-wrap gap-3">
+          <a routerLink="/laboratorios" class="btn btn-primary">Ver laboratorios</a>
+          <a routerLink="/resultados" class="btn btn-outline-primary">Resultados y cargas</a>
+        </div>
       </div>
-      <button class="btn-close d-lg-none" aria-label="Cerrar menú" (click)="toggleSidebar()">✕</button>
+      <div class="lc-hero-stats">
+        <div class="stat-card">
+          <div class="label">Rol activo</div>
+          <div class="value">{{ currentUserRole || 'Invitado' }}</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Acceso seguro</div>
+          <div class="value">2FA listo</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Cobertura QA</div>
+          <div class="value">90%+</div>
+        </div>
+      </div>
     </div>
+  </header>
 
-    <nav class="lc-menu mt-3" aria-label="Navegación principal">
-      <a class="nav-item" routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
-      <a *ngIf="hasRole(['ADMIN', 'MEDICO'])" class="nav-item" routerLink="/laboratorios" routerLinkActive="active">Laboratorios</a>
-      <a *ngIf="hasRole(['ADMIN', 'MEDICO'])" class="nav-item" routerLink="/resultados" routerLinkActive="active">Resultados</a>
-      <a *ngIf="hasRole(['PATIENT'])" class="nav-item" routerLink="/mis-resultados" routerLinkActive="active">Mis resultados</a>
-      <a class="nav-item" routerLink="/perfil" routerLinkActive="active">Perfil</a>
-    </nav>
-
-    <div class="lc-footer mt-auto">
-      <button class="btn-logout" (click)="logout()">Cerrar sesión</button>
-    </div>
-  </aside>
-
-  <div class="lc-content">
-    <header class="lc-topbar d-flex align-items-center justify-content-between">
-      <div class="d-flex align-items-center">
-        <button class="btn-hamburger d-lg-none me-2" (click)="toggleSidebar()" aria-label="Abrir menú">☰</button>
-        <h1 class="mb-0 d-none d-lg-block">LabControl 8</h1>
+  <div class="lc-body">
+    <aside class="lc-sidebar" [class.collapsed]="isCollapsed" role="navigation" aria-label="Menu principal">
+      <div class="lc-logo d-flex align-items-center justify-content-between">
+        <div>
+          <span class="lc-logo-main">Panel</span>
+          <div class="lc-logo-sub">Vista rapida</div>
+        </div>
+        <button class="btn-close d-lg-none" aria-label="Cerrar menu" (click)="toggleSidebar()">×</button>
       </div>
 
-      <div class="d-flex align-items-center">
-        <span class="lc-user-badge me-3">{{ currentUserName || 'Usuario' }}</span>
-        <button class="btn btn-link btn-sm" (click)="logout()">Cerrar sesión</button>
+      <nav class="lc-menu" aria-label="Navegacion principal">
+        <a class="nav-item" routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+        <a *ngIf="hasRole(['ADMIN', 'MEDICO'])" class="nav-item" routerLink="/laboratorios" routerLinkActive="active">Laboratorios</a>
+        <a *ngIf="hasRole(['ADMIN', 'MEDICO'])" class="nav-item" routerLink="/resultados" routerLinkActive="active">Resultados</a>
+        <a *ngIf="hasRole(['PATIENT'])" class="nav-item" routerLink="/mis-resultados" routerLinkActive="active">Mis resultados</a>
+        <a class="nav-item" routerLink="/perfil" routerLinkActive="active">Perfil</a>
+      </nav>
+
+      <div class="lc-footer mt-auto">
+        <button class="btn-logout" (click)="logout()">Cerrar sesion</button>
       </div>
-    </header>
+    </aside>
 
     <main class="lc-main">
       <router-outlet></router-outlet>
