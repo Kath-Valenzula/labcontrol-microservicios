@@ -1,11 +1,11 @@
 <div class="auth-shell container">
   <div class="row justify-content-center">
-    <div class="col-12 col-lg-10">
+    <div class="col-12 col-lg-10 col-xl-9">
       <div class="auth-card">
         <div class="auth-header">
-          <p class="eyebrow">Alta de usuario</p>
-          <h2>Crear cuenta</h2>
-          <p class="subtitle">Registra pacientes, medicos o administradores con validaciones visibles.</p>
+          <p class="eyebrow">Registro</p>
+          <h2>Crea tu cuenta</h2>
+          <p class="subtitle">Completa tus datos y elige tu rol. Usaremos este correo para acceso y recuperaci髇.</p>
         </div>
 
         <form [formGroup]="form" (ngSubmit)="submit()" novalidate class="auth-form">
@@ -13,12 +13,12 @@
             <div class="col-12 col-md-6">
               <label for="nombre">Nombre</label>
               <input id="nombre" class="form-control" formControlName="nombre" placeholder="Nombre" />
-              <div class="text-danger" *ngIf="f['nombre'].touched && f['nombre'].invalid">Este campo es obligatorio.</div>
+              <div class="text-danger" *ngIf="f['nombre'].touched && f['nombre'].invalid">Campo obligatorio.</div>
             </div>
             <div class="col-12 col-md-6">
               <label for="apellido">Apellido</label>
               <input id="apellido" class="form-control" formControlName="apellido" placeholder="Apellido" />
-              <div class="text-danger" *ngIf="f['apellido'].touched && f['apellido'].invalid">Este campo es obligatorio.</div>
+              <div class="text-danger" *ngIf="f['apellido'].touched && f['apellido'].invalid">Campo obligatorio.</div>
             </div>
             <div class="col-12 col-md-6">
               <label for="correo">Correo</label>
@@ -42,7 +42,7 @@
             </div>
             <div class="col-12 col-md-8 password-box" formGroupName="passwords">
               <label for="password">Contrasena</label>
-              <input id="password" class="form-control" formControlName="password" type="password" placeholder="Mayuscula, minuscula, numero, simbolo" />
+              <input id="password" class="form-control" formControlName="password" type="password" placeholder="Mayuscula, minuscula, numero y simbolo" />
               <div class="text-danger" *ngIf="p['password'].touched && p['password'].invalid">
                 <div *ngIf="p['password'].errors?.['required']">Obligatorio.</div>
                 <div *ngIf="p['password'].errors?.['minlength']">Minimo 8 caracteres.</div>
@@ -54,7 +54,7 @@
                 </div>
               </div>
 
-              <label for="confirmPassword" class="mt-2">Confirmar</label>
+              <label for="confirmPassword" class="mt-2">Confirmar contrasena</label>
               <input id="confirmPassword" class="form-control" formControlName="confirmPassword" type="password" placeholder="Repite la contrasena" />
               <div class="text-danger" *ngIf="(p['confirmPassword'].touched || form.get('passwords')?.touched) && form.get('passwords')?.errors?.['mismatch']">
                 Las contrasenas no coinciden.
@@ -70,7 +70,7 @@
             </div>
           </div>
 
-          <div class="d-flex gap-2 mt-3">
+          <div class="d-flex gap-2 mt-3 flex-wrap">
             <button class="btn btn-primary" type="submit" [disabled]="loading || form.invalid">Registrar</button>
             <a routerLink="/auth/login" class="btn btn-outline-secondary">Volver a iniciar sesion</a>
           </div>

@@ -48,6 +48,10 @@
   margin: 0;
 }
 
+.subtitle {
+  color: $muted;
+}
+
 @media (max-width: $bp-tablet) {
   .auth-card {
     padding: 1.25rem;

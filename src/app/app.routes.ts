@@ -15,15 +15,15 @@ import { MisResultadosComponent } from './features/resultados/mis-resultados.com
 import { ProfileComponent } from './users/profile/profile.component';
 
 export const routes: Routes = [
-  {
-    path: 'auth',
-    children: [
-      { path: 'login', component: LoginComponent },
-      { path: 'register', component: RegistroComponent },
-      { path: 'forgot-password', component: RecuperarPasswordComponent },
-      { path: '', redirectTo: 'login', pathMatch: 'full' }
-    ]
-  },
+  // Rutas de autenticación independientes (sin layout)
+  { path: 'auth/login', component: LoginComponent },
+  { path: 'auth/register', component: RegistroComponent },
+  { path: 'auth/forgot-password', component: RecuperarPasswordComponent },
+  // Alias en español
+  { path: 'auth/registro', component: RegistroComponent },
+  { path: 'auth/recuperar', component: RecuperarPasswordComponent },
+
+  // Rutas protegidas con layout principal
   {
     path: '',
     component: MainLayoutComponent,
