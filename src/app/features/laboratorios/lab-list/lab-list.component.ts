@@ -1,12 +1,15 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule, Router } from '@angular/router';
 import { LaboratoriosService } from '../../../core/services/laboratorios.service';
 import { Laboratorio } from '../../../models/laboratorio.model';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-lab-list',
   templateUrl: './lab-list.component.html',
-  styleUrls: ['./lab-list.component.scss']
+  styleUrls: ['./lab-list.component.scss'],
+  standalone: true,
+  imports: [CommonModule, RouterModule]
 })
 export class LabListComponent implements OnInit {
   labs: Laboratorio[] = [];

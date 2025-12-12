@@ -13,6 +13,8 @@ import { ResultListComponent } from './features/resultados/result-list/result-li
 import { ResultFormComponent } from './features/resultados/result-form/result-form.component';
 import { MisResultadosComponent } from './features/resultados/mis-resultados.component';
 import { ProfileComponent } from './users/profile/profile.component';
+import { UserListComponent } from './users/user-list/user-list.component';
+import { UserFormComponent } from './users/user-form/user-form.component';
 
 export const routes: Routes = [
   // Rutas de autenticación independientes (sin layout)
@@ -36,6 +38,9 @@ export const routes: Routes = [
       { path: 'resultados/nuevo', component: ResultFormComponent, canActivate: [RoleGuard], data: { roles: ['ADMIN', 'MEDICO'] } },
       { path: 'resultados/:id', component: ResultFormComponent, canActivate: [RoleGuard], data: { roles: ['ADMIN', 'MEDICO'] } },
       { path: 'mis-resultados', component: MisResultadosComponent, canActivate: [RoleGuard], data: { roles: ['PATIENT'] } },
+      { path: 'usuarios', component: UserListComponent, canActivate: [RoleGuard], data: { roles: ['ADMIN'] } },
+      { path: 'usuarios/nuevo', component: UserFormComponent, canActivate: [RoleGuard], data: { roles: ['ADMIN'] } },
+      { path: 'usuarios/:id', component: UserFormComponent, canActivate: [RoleGuard], data: { roles: ['ADMIN'] } },
       { path: 'perfil', component: ProfileComponent, canActivate: [RoleGuard] }
     ]
   },

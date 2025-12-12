@@ -21,8 +21,9 @@ export class LabFormComponent implements OnInit {
   constructor(private fb: FormBuilder, private srv: LaboratoriosService, private route: ActivatedRoute, private router: Router) {
     this.form = this.fb.group({
       nombre: ['', [Validators.required]],
-      direccion: ['', [Validators.required]],
-      telefono: ['']
+      ubicacion: ['', [Validators.required]],
+      capacidad: [null],
+      encargadoId: [null]
     });
   }
 
@@ -45,7 +46,10 @@ export class LabFormComponent implements OnInit {
     if (this.isEdit && this.id) {
       this.srv.update(this.id, payload).subscribe({ next: () => this.router.navigate(['/laboratorios']), error: () => { this.error = 'Error al actualizar.'; this.loading = false; } });
     } else {
-      this.srv.create(payload).subscribe({ next: () => this.router.navigate(['/laboratorios']), error: () => { this.error = 'Error al crear laboratorio.'; this.loading = false; } });
+      this.srv.create(payload).subscribe({ next: () => this.router.navigate(['/laboratorios']), error: (err) => {
+        this.error = err?.error?.message || 'Error al crear laboratorio.';
+        this.loading = false;
+      }});
     }
   }
 }

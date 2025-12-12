@@ -1,8 +1,9 @@
 // Modelo: Laboratorio
 // Representa un laboratorio clínico
 export interface Laboratorio {
-  id: number;
+  id?: number;
   nombre: string;
-  direccion: string;
-  telefono?: string; // opcional
+  ubicacion: string;
+  capacidad?: number;
+  encargadoId?: number;
 }
