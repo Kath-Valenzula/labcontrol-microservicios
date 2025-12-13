@@ -1,43 +1,34 @@
 # Labcontrol8
 
-## Arquitectura y patrones (frontend)
-- **Modular por feature y capa core**: dominios UI en `src/app/features` (auth, laboratorios, resultados, perfil); servicios singleton y guards en `src/app/core`; modelos tipados en `src/app/models`. Separa presentacion de acceso a datos.
-- **Layout como shell**: `src/app/layout/main-layout/main-layout.component.*` aloja la estructura comun (navbar/aside) y enruta el resto.
-- **Servicios inyectables**: componentes consumen `AuthService`, `LaboratoriosService`, `ResultadosService`, `ConfigService` (`src/app/core/services`) en lugar de instanciar dependencias.
-- **Observer con RxJS**: `AuthService` expone `currentUser$` (BehaviorSubject) y los servicios retornan `Observable` para llamadas HTTP (`*.service.ts`).
-- **Guards como capa de politicas**: `src/app/core/guards/auth.guard.ts` y `role.guard.ts` validan sesion y roles antes de cargar vistas.
-- **Rutas centralizadas**: `src/app/app.routes.ts` define paths, children y protecciones en un solo lugar.
+Aplicación frontend desarrollada en Angular, estructurada bajo un patrón modular por feature y una capa core para servicios y guards. El diseño sigue el enfoque de separación de responsabilidades, con componentes desacoplados y servicios inyectables. La navegación y la protección de rutas se gestionan centralizadamente, y la interfaz es responsive gracias al uso de Bootstrap y grid de 12 columnas.
 
-### Como extender sin romper el diseno
-1. Crea componentes en `src/app/features/<dominio>`.
-2. Implementa un servicio en `src/app/core/services` que exponga `Observable`.
-3. Define el modelo en `src/app/models`.
-4. Declara la ruta en `src/app/app.routes.ts` y aplica guard si corresponde.
+El trabajo colaborativo se gestiona mediante GIT, utilizando ramas cortas y revisiones por pull request. El repositorio mantiene la rama principal siempre estable y documenta los cambios con mensajes claros y convenciones estándar. El flujo de trabajo permite integración continua y control de versiones eficiente.
 
-## Estrategia Git (frontend)
-- **Trunk ligero**: `main` siempre estable; trabajo diario en ramas cortas.
-- **Convencion**: `feature/<tema>`, `fix/<bug>`, `chore/<tarea>`. Commits pequenos y descriptivos (`feat: crear formulario de resultados`).
-- **Flujo sugerido**:
-  ```bash
-  git switch main
-  git pull --rebase
-  git switch -c feature/nuevo-formulario
-  # cambios y pruebas
-  git status
-  git add src/... docs/...
-  git commit -m "feat: crear formulario de resultados"
-  git fetch origin
-  git rebase origin/main
-  git push -u origin feature/nuevo-formulario
-  ```
-  Integra por PR hacia `main`; preferir `--ff-only` para mantener historial limpio:
-  ```bash
-  git switch main
-  git pull --rebase
-  git merge --ff-only origin/feature/nuevo-formulario
-  git push origin main
-  git push origin --delete feature/nuevo-formulario
-  ```
+El proyecto implementa guards para roles y autenticación, servicios HTTP centralizados y modelos tipados. La comunicación con los microservicios backend se realiza mediante APIs REST, cumpliendo con los requisitos de integración y seguridad.
+
+Para extender la aplicación, se recomienda crear nuevos componentes en `src/app/features`, servicios en `src/app/core/services` y modelos en `src/app/models`, siguiendo la estructura y convenciones existentes.
+
+---
+
+## Comandos básicos Angular
+- `ng serve`: servidor de desarrollo en `http://localhost:4200/`, recarga automática.
+- `ng build`: genera artefactos en `dist/`.
+- `ng test`: pruebas unitarias (Karma).
+- `ng e2e`: pruebas end-to-end (requiere paquete e2e instalado).
+
+## Estrategia Git
+- Rama principal (`main`) siempre estable.
+- Ramas de trabajo para features, fixes y tareas.
+- Pull requests para revisión y merge.
+- Etiquetado de releases y manejo de hotfixes desde `main`.
+
+## Probar endpoints con Postman
+1. Importa la colección desde `postman/DSY2205_labcontrol8.postman_collection.json`.
+2. Endpoints de ejemplo:
+  - Usuarios: `GET http://localhost:8080/api/usuarios`
+  - Laboratorios: `GET http://localhost:8081/api/laboratorios`
+  - Reservas: `GET http://localhost:8083/api/reservas`
+Puedes agregar más requests según los endpoints del backend.
 - **Equipo pequeno**: rebase diario sobre `main`, al menos una revision por PR, ramas vivas max 3-5 dias, etiquetar releases (`git tag v1.2.0 && git push origin v1.2.0`); hotfixes via `fix/<bug>` rebasadas desde `main`.
 
 ## Probar endpoints con Postman
