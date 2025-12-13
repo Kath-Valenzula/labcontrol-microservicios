@@ -7,6 +7,7 @@ import { ConfigService } from './config.service';
 describe('LaboratoriosService', () => {
   let service: LaboratoriosService;
   let httpMock: HttpTestingController;
+  let baseUrl: string;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -19,13 +20,15 @@ describe('LaboratoriosService', () => {
     });
     service = TestBed.inject(LaboratoriosService);
     httpMock = TestBed.inject(HttpTestingController);
+    const cfg = TestBed.inject(ConfigService);
+    baseUrl = `${cfg.getLaboratoriosBaseUrl()}/laboratorios`;
   });
 
   afterEach(() => httpMock.verify());
 
   it('getAll hace GET a /laboratorios', () => {
     service.getAll().subscribe();
-    const req = httpMock.expectOne('http://localhost:8080/api/laboratorios');
+    const req = httpMock.expectOne(baseUrl);
     expect(req.request.method).toBe('GET');
     req.flush([]);
   });
@@ -33,21 +36,21 @@ describe('LaboratoriosService', () => {
   it('create hace POST y devuelve laboratorio', () => {
     const payload = { nombre: 'Lab' };
     service.create(payload).subscribe();
-    const req = httpMock.expectOne('http://localhost:8080/api/laboratorios');
+    const req = httpMock.expectOne(baseUrl);
     expect(req.request.method).toBe('POST');
     req.flush({ id: 1, nombre: 'Lab' });
   });
 
   it('getById hace GET con id', () => {
     service.getById(9).subscribe();
-    const req = httpMock.expectOne('http://localhost:8080/api/laboratorios/9');
+    const req = httpMock.expectOne(`${baseUrl}/9`);
     expect(req.request.method).toBe('GET');
     req.flush({ id: 9 });
   });
 
   it('delete hace DELETE', () => {
     service.delete(5).subscribe();
-    const req = httpMock.expectOne('http://localhost:8080/api/laboratorios/5');
+    const req = httpMock.expectOne(`${baseUrl}/5`);
     expect(req.request.method).toBe('DELETE');
     req.flush({});
   });

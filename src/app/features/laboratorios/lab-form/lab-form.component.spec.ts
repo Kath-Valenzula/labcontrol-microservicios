@@ -10,7 +10,7 @@ describe('LabFormComponent', () => {
   let component: LabFormComponent;
   let fixture: ComponentFixture<LabFormComponent>;
   const mockSrv = {
-    getById: jasmine.createSpy('getById').and.returnValue(of({ nombre: 'Lab', direccion: 'Dir', telefono: '123' })),
+    getById: jasmine.createSpy('getById').and.returnValue(of({ nombre: 'Lab', ubicacion: 'Dir', capacidad: 10, encargadoId: null })),
     update: jasmine.createSpy('update').and.returnValue(of({})),
     create: jasmine.createSpy('create').and.returnValue(of({}))
   };
@@ -41,7 +41,7 @@ describe('LabFormComponent', () => {
     buildComponent();
     const router = TestBed.inject(Router);
     const navSpy = spyOn(router, 'navigate').and.resolveTo(true);
-    component.form.patchValue({ nombre: 'N', direccion: 'D', telefono: '' });
+    component.form.patchValue({ nombre: 'N', ubicacion: 'D', capacidad: 5 });
     component.submit();
     expect(mockSrv.create).toHaveBeenCalled();
     expect(navSpy).toHaveBeenCalledWith(['/laboratorios']);
@@ -54,7 +54,7 @@ describe('LabFormComponent', () => {
     expect(mockSrv.getById).toHaveBeenCalledWith(7);
     const router = TestBed.inject(Router);
     const navSpy = spyOn(router, 'navigate').and.resolveTo(true);
-    component.form.patchValue({ nombre: 'X', direccion: 'Y', telefono: '1' });
+    component.form.patchValue({ nombre: 'X', ubicacion: 'Y', capacidad: 2 });
     component.submit();
     expect(mockSrv.update).toHaveBeenCalledWith(7, jasmine.any(Object));
     expect(navSpy).toHaveBeenCalledWith(['/laboratorios']);

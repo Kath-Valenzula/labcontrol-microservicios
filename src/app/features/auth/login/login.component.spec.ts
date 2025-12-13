@@ -15,6 +15,7 @@ describe('LoginComponent', () => {
 
   beforeEach(async () => {
     mockAuth.login.calls.reset();
+    mockAuth.login.and.returnValue(of({ correo: 'demo@example.com' }));
     await TestBed.configureTestingModule({
       imports: [LoginComponent, RouterTestingModule],
       providers: [

@@ -24,8 +24,7 @@ describe('LabListComponent', () => {
     mockSrv.getAll.calls.reset();
     mockSrv.delete.calls.reset();
     await TestBed.configureTestingModule({
-      declarations: [LabListComponent],
-      imports: [CommonModule, RouterTestingModule],
+      imports: [LabListComponent, RouterTestingModule],
       providers: [{ provide: LaboratoriosService, useValue: mockSrv }]
     }).compileComponents();
     fixture = TestBed.createComponent(LabListComponent);

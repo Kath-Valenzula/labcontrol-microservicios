@@ -13,6 +13,12 @@ import { Laboratorio } from '../../../models/laboratorio.model';
 })
 export class LabListComponent implements OnInit {
   labs: Laboratorio[] = [];
+  readonly sampleLabs: Laboratorio[] = [
+    { id: 1, nombre: 'Lab Redes', ubicacion: 'Edificio B, Sala 203', capacidad: 30, encargadoId: 1 },
+    { id: 2, nombre: 'Lab Programacion', ubicacion: 'Edificio A, Sala 101', capacidad: 25, encargadoId: 2 },
+    { id: 3, nombre: 'Lab Electronica', ubicacion: 'Edificio C, Sala 305', capacidad: 20, encargadoId: 3 },
+    { id: 21, nombre: 'Laboratorio de Pruebas', ubicacion: 'Edificio A - Piso 3', capacidad: 25 }
+  ];
   loading = false;
   error: string | null = null;
 
@@ -25,6 +31,10 @@ export class LabListComponent implements OnInit {
   load() {
     this.loading = true; this.error = null;
     this.srv.getAll().subscribe({ next: data => { this.labs = data; this.loading = false; }, error: err => { this.error = err?.error?.message || 'Error al cargar laboratorios.'; this.loading = false; } });
+  }
+
+  get headerLabs(): Laboratorio[] {
+    return this.labs.length ? this.labs : this.sampleLabs;
   }
 
   edit(id: number) { this.router.navigate(['/laboratorios', id, 'editar']); }

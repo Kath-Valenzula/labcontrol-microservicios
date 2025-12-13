@@ -9,6 +9,7 @@ import { Usuario } from '../../models/usuario.model';
 describe('AuthService', () => {
   let service: AuthService;
   let httpMock: HttpTestingController;
+  let baseUrl: string;
 
   beforeEach(() => {
     localStorage.removeItem('labcontrol8_user');
@@ -21,6 +22,8 @@ describe('AuthService', () => {
         { provide: PLATFORM_ID, useValue: 'browser' }
       ]
     });
+    const cfg = TestBed.inject(ConfigService);
+    baseUrl = cfg.getUsuariosBaseUrl();
   });
 
   afterEach(() => {
@@ -41,12 +44,16 @@ describe('AuthService', () => {
       expect(stored).toContain('test@example.com');
       done();
     });
+    const req = httpMock.expectOne(`${baseUrl}/auth/login`);
+    expect(req.request.method).toBe('POST');
+    req.flush({ id: 1, correo: 'test@example.com', rol: 'ADMIN' });
   });
 
   it('logout debe limpiar usuario en memoria y storage', () => {
     service = TestBed.inject(AuthService);
     httpMock = TestBed.inject(HttpTestingController);
     service.login({ correo: 'demo@example.com', password: '12345678' }).subscribe();
+    httpMock.expectOne(`${baseUrl}/auth/login`).flush({ id: 2, correo: 'demo@example.com', rol: 'ADMIN' });
     service.logout();
     expect(service.currentUserValue).toBeNull();
     expect(localStorage.getItem('labcontrol8_user')).toBeNull();
@@ -62,6 +69,8 @@ describe('AuthService', () => {
     service = TestBed.inject(AuthService);
     expect(service.isLoggedIn()).toBeFalse();
     service.login({ correo: 'demo@example.com', password: '12345678' }).subscribe();
+    httpMock = TestBed.inject(HttpTestingController);
+    httpMock.expectOne(`${baseUrl}/auth/login`).flush({ id: 3, correo: 'demo@example.com', rol: 'USER' });
     expect(service.isLoggedIn()).toBeTrue();
   });
 
@@ -80,6 +89,7 @@ describe('AuthService', () => {
     httpMock = TestBed.inject(HttpTestingController);
     localStorage.setItem('labcontrol8_user', JSON.stringify({ correo: 'persist' }));
     service.login({ correo: 'demo@example.com', password: '12345678' }).subscribe();
+    httpMock.expectOne(`${baseUrl}/auth/login`).flush({ id: 4, correo: 'demo@example.com', rol: 'USER' });
     expect(localStorage.getItem('labcontrol8_user')).toContain('persist'); // saveUserToStorage no ejecuta
   });
 
@@ -93,7 +103,8 @@ describe('AuthService', () => {
       password: '12345678'
     };
     service.register(payload).subscribe();
-    const req = httpMock.expectOne('http://localhost:8080/api/usuarios');
+    httpMock = TestBed.inject(HttpTestingController);
+    const req = httpMock.expectOne(`${baseUrl}/usuarios`);
     expect(req.request.method).toBe('POST');
     req.flush({ ...payload, id: 1, rol: 'ADMIN', fechaRegistro: '2024-01-01' });
   });
@@ -102,7 +113,7 @@ describe('AuthService', () => {
     service = TestBed.inject(AuthService);
     httpMock = TestBed.inject(HttpTestingController);
     service.forgotPassword('reset@example.com').subscribe();
-    const req = httpMock.expectOne('http://localhost:8080/api/usuarios/forgot');
+    const req = httpMock.expectOne(`${baseUrl}/usuarios/forgot`);
     expect(req.request.method).toBe('POST');
     expect(req.request.body.correo).toBe('reset@example.com');
     req.flush({ message: 'ok' });
@@ -120,5 +131,6 @@ describe('AuthService', () => {
       sub.unsubscribe();
       done();
     });
+    httpMock.expectOne(`${baseUrl}/auth/login`).flush({ id: 5, correo: 'flow@example.com', rol: 'USER' });
   });
 });

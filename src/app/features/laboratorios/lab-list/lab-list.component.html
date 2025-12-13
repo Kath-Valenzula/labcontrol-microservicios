@@ -3,7 +3,28 @@
     <div>
       <p class="eyebrow mb-1">Red de laboratorios</p>
       <h5 class="mb-0">Laboratorios conectados</h5>
-      <div class="hint">Gestiona al menos 3 laboratorios para cumplir el caso.</div>
+      <div class="header-table table-responsive mt-3">
+        <table class="table table-sm align-middle mb-0">
+          <thead>
+            <tr>
+              <th>ID_LAB</th>
+              <th>Nombre</th>
+              <th>Ubicacion</th>
+              <th>Capacidad</th>
+              <th>Encargado_ID</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let l of headerLabs">
+              <td>{{ l.id }}</td>
+              <td>{{ l.nombre }}</td>
+              <td>{{ l.ubicacion }}</td>
+              <td>{{ l.capacidad }}</td>
+              <td>{{ l.encargadoId === null || l.encargadoId === undefined ? '' : l.encargadoId }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
     <div class="d-flex gap-2">
       <button class="btn btn-outline-secondary btn-sm" (click)="load()">Refrescar</button>
@@ -24,7 +45,7 @@
         <thead>
           <tr>
             <th>Nombre</th>
-            <th>Ubicación</th>
+            <th>Ubicacion</th>
             <th>Capacidad</th>
             <th>Encargado</th>
             <th class="text-end">Acciones</th>
