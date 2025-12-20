@@ -42,3 +42,6 @@ testem.log
 Thumbs.db
 demostracionmicroservicios.mp4
 *.mp4
+
+# Docker runtime data (no versionar)
+/logging/loki-data/
