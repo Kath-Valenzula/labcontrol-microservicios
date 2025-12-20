@@ -1,8 +1,9 @@
-import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { BehaviorSubject } from 'rxjs';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { BehaviorSubject, of } from 'rxjs';
 import { ProfileComponent } from './profile.component';
 import { AuthService } from '../../core/services/auth.service';
 import { Usuario } from '../../models/usuario.model';
+import { UsuariosService } from '../../core/services/usuarios.service';
 
 describe('ProfileComponent', () => {
   let component: ProfileComponent;
@@ -17,11 +18,14 @@ describe('ProfileComponent', () => {
     rol: 'ADMIN'
   };
   const mockAuth: any = {};
+  const mockUsuarios: any = {};
 
   beforeEach(async () => {
     mockAuth.currentUserSubject = new BehaviorSubject<Usuario | null>(user);
     mockAuth.currentUser$ = mockAuth.currentUserSubject.asObservable();
-    mockAuth.saveUserToStorage = jasmine.createSpy('saveUserToStorage');
+    mockAuth.setCurrentUser = jasmine.createSpy('setCurrentUser').and.callFake((updated: Usuario | null) => {
+      mockAuth.currentUserSubject.next(updated);
+    });
     if (Object.getOwnPropertyDescriptor(mockAuth, 'currentUserValue')) {
       delete (mockAuth as any).currentUserValue;
     }
@@ -29,10 +33,14 @@ describe('ProfileComponent', () => {
       configurable: true,
       get: () => mockAuth.currentUserSubject.value
     });
+    mockUsuarios.update = jasmine.createSpy('update').and.returnValue(of({ ...user }));
 
     await TestBed.configureTestingModule({
       imports: [ProfileComponent],
-      providers: [{ provide: AuthService, useValue: mockAuth }]
+      providers: [
+        { provide: AuthService, useValue: mockAuth },
+        { provide: UsuariosService, useValue: mockUsuarios }
+      ]
     }).compileComponents();
     fixture = TestBed.createComponent(ProfileComponent);
     component = fixture.componentInstance;
@@ -67,22 +75,22 @@ describe('ProfileComponent', () => {
     expect(component.success).toBeNull();
   });
 
-  it('save actualiza usuario y deja success en true', fakeAsync(() => {
+  it('save actualiza usuario y deja success en true', () => {
     component.form.patchValue({
       nombre: 'Nuevo',
       apellido: 'Nombre',
       correo: 'nuevo@example.com',
       telefono: '999'
     });
+    mockUsuarios.update.and.returnValue(of({ ...user, nombre: 'Nuevo', apellido: 'Nombre', correo: 'nuevo@example.com', telefono: '999' }));
     component.save();
-    expect(component.loading).toBeTrue();
-    tick(700);
-    expect(mockAuth.currentUserValue?.nombre).toBe('Nuevo');
-    expect(mockAuth.saveUserToStorage).toHaveBeenCalled();
     expect(component.loading).toBeFalse();
+    expect(mockUsuarios.update).toHaveBeenCalled();
+    expect(mockAuth.currentUserValue?.nombre).toBe('Nuevo');
+    expect(mockAuth.setCurrentUser).toHaveBeenCalled();
     expect(component.error).toBeNull();
     expect(component.success).toBeTruthy();
-  }));
+  });
 
   it('save muestra error cuando no hay usuario', () => {
     mockAuth.currentUserSubject.next(null);

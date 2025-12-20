@@ -6,11 +6,17 @@ services:
     ports:
       - "4200:80"
     environment:
-      - API_BASE_URL=http://microservicio-usuarios:8080/api
+      - API_BASE_URL=/api
+      - API_USUARIOS=/api
+      - API_LABORATORIOS=/api
+      - API_RESULTADOS=/api
     depends_on:
       - microservicio-usuarios
       - microservicio-laboratorios
       - microservicio-reservas
+      - microservicio-resultados
+      - loki
+      - promtail
 
   microservicio-usuarios:
     build:
@@ -53,3 +59,37 @@ services:
       - TNS_ADMIN=/wallet
     volumes:
       - "C:/microservicios/Wallet_BDDSY2205:/wallet:ro"
+
+  microservicio-resultados:
+    build:
+      context: C:/DSY2205_Backend/microservicio-resultados
+    container_name: ms-resultados
+    ports:
+      - "8084:8084"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:oracle:thin:@bddsy2205_high?TNS_ADMIN=/wallet
+      - SPRING_DATASOURCE_USERNAME=ADMIN
+      - SPRING_DATASOURCE_PASSWORD=Florencia.2014
+      - TNS_ADMIN=/wallet
+    volumes:
+      - "C:/microservicios/Wallet_BDDSY2205:/wallet:ro"
+
+  loki:
+    image: grafana/loki:2.9.4
+    container_name: loki
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/local-config.yaml
+    volumes:
+      - "./logging/loki-config.yml:/etc/loki/local-config.yaml:ro"
+      - "./logging/loki-data:/tmp/loki"
+
+  promtail:
+    image: grafana/promtail:2.9.4
+    container_name: promtail
+    command: -config.file=/etc/promtail/config.yml
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "./logging/promtail-config.yml:/etc/promtail/config.yml:ro"
+    depends_on:
+      - loki

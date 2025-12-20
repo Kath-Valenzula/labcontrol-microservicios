@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../core/services/auth.service';
+import { UsuariosService } from '../../core/services/usuarios.service';
 import { Usuario } from '../../models/usuario.model';
 
 @Component({
@@ -17,7 +18,7 @@ export class ProfileComponent implements OnInit {
   success: string | null = null;
   error: string | null = null;
 
-  constructor(private fb: FormBuilder, private auth: AuthService) {
+  constructor(private fb: FormBuilder, private auth: AuthService, private usuarios: UsuariosService) {
     this.form = this.fb.group({
       nombre: ['', [Validators.required, Validators.minLength(2)]],
       apellido: ['', [Validators.required, Validators.minLength(2)]],
@@ -70,26 +71,22 @@ export class ProfileComponent implements OnInit {
       telefono: this.f['telefono'].value
     };
 
-    // Preferir usar UsuariosService si existe; AuthService puede mantener el usuario local.
-    // Aquí actualizamos mediante AuthService y dejamos TODO para llamada real al backend.
-    // TODO: Reemplazar por `UsuariosService.update(currentUser.id, payload)` cuando el endpoint exista.
     const current = this.auth.currentUserValue;
     if (!current) {
       this.loading = false; this.error = 'No hay usuario autenticado.'; return;
     }
 
-    // Simulación local: actualizar el usuario en el BehaviorSubject y storage
-    const updated: Usuario = { ...current, ...payload } as Usuario;
-    // Si el backend está disponible, AuthService debería exponer un método para actualizar.
-    // Para mantener consistencia, guardamos localmente y mostramos éxito.
-    setTimeout(() => {
-      try {
-        // Accedemos a propiedades internas con cast para demo local
-        (this.auth as any).currentUserSubject.next(updated);
-        (this.auth as any).saveUserToStorage && (this.auth as any).saveUserToStorage(updated);
-      } catch {}
-      this.loading = false;
-      this.success = 'Perfil actualizado localmente.';
-    }, 700);
+    this.usuarios.update(current.id, payload).subscribe({
+      next: (updated) => {
+        const merged: Usuario = { ...current, ...updated };
+        this.auth.setCurrentUser(merged);
+        this.loading = false;
+        this.success = 'Perfil actualizado correctamente.';
+      },
+      error: (err) => {
+        this.loading = false;
+        this.error = err?.error?.message || 'Error al actualizar perfil.';
+      }
+    });
   }
 }

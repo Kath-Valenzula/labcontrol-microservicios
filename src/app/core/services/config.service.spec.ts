@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { ConfigService } from './config.service';
+import { environment } from '../../../environments/environment';
 
 describe('ConfigService', () => {
   let service: ConfigService;
@@ -20,10 +21,10 @@ describe('ConfigService', () => {
 
   it('omite API_BASE_URL invalida y usa environment.apiBaseUrl', () => {
     (window as any).__env = { API_BASE_URL: '__PLACEHOLDER__' };
-    expect(service.getApiBaseUrl()).toBe('http://localhost:8080/api');
+    expect(service.getApiBaseUrl()).toBe(environment.apiBaseUrl);
   });
 
   it('usa environment.apiBaseUrl cuando no hay __env', () => {
-    expect(service.getApiBaseUrl()).toBe('http://localhost:8080/api');
+    expect(service.getApiBaseUrl()).toBe(environment.apiBaseUrl);
   });
 });

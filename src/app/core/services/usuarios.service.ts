@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Usuario } from '../../models/usuario.model';
 import { ConfigService } from './config.service';
@@ -11,31 +11,23 @@ export class UsuariosService {
     this.base = `${this.config.getUsuariosBaseUrl()}/usuarios`;
   }
 
-  private getAuthHeaders() {
-    return {
-      headers: new HttpHeaders({
-        'Authorization': 'Basic ' + btoa('admin:admin123')
-      })
-    };
-  }
-
   getAll(): Observable<Usuario[]> {
-    return this.http.get<Usuario[]>(this.base, this.getAuthHeaders());
+    return this.http.get<Usuario[]>(this.base);
   }
 
   getById(id: number): Observable<Usuario> {
-    return this.http.get<Usuario>(`${this.base}/${id}`, this.getAuthHeaders());
+    return this.http.get<Usuario>(`${this.base}/${id}`);
   }
 
   create(payload: Partial<Usuario>): Observable<Usuario> {
-    return this.http.post<Usuario>(this.base, payload, this.getAuthHeaders());
+    return this.http.post<Usuario>(this.base, payload);
   }
 
   update(id: number, payload: Partial<Usuario>): Observable<Usuario> {
-    return this.http.put<Usuario>(`${this.base}/${id}`, payload, this.getAuthHeaders());
+    return this.http.put<Usuario>(`${this.base}/${id}`, payload);
   }
 
   delete(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.base}/${id}`, this.getAuthHeaders());
+    return this.http.delete<void>(`${this.base}/${id}`);
   }
 }

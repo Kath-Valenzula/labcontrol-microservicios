@@ -5,5 +5,5 @@ export const environment = {
   // Microservicios específicos
   apiUsuarios: 'http://localhost:8080/api',
   apiLaboratorios: 'http://localhost:8081/api',
-  apiResultados: 'http://localhost:8083/api' // o apiReservas si prefieres
+  apiResultados: 'http://localhost:8084/api'
 };

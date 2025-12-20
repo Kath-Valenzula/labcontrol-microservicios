@@ -1,19 +1,23 @@
 import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, of, tap, catchError, delay } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { Usuario } from '../../models/usuario.model';
 import { ConfigService } from './config.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private currentUserSubject = new BehaviorSubject<Usuario | null>(this.readStorageUser());
-  public currentUser$ = this.currentUserSubject.asObservable();
+  private currentUserSubject: BehaviorSubject<Usuario | null>;
+  public currentUser$: Observable<Usuario | null>;
 
+  private basicAuthHeader: string | null = null;
   private isBrowser: boolean;
 
   constructor(private http: HttpClient, @Inject(PLATFORM_ID) private platformId: any, private config: ConfigService) {
     this.isBrowser = isPlatformBrowser(this.platformId);
+    this.currentUserSubject = new BehaviorSubject<Usuario | null>(this.readStorageUser());
+    this.currentUser$ = this.currentUserSubject.asObservable();
+    this.basicAuthHeader = this.readStorageAuth();
   }
 
   private readStorageUser(): Usuario | null {
@@ -36,60 +40,76 @@ export class AuthService {
     }
   }
 
+  setCurrentUser(user: Usuario | null) {
+    this.currentUserSubject.next(user);
+    this.saveUserToStorage(user);
+  }
+
+  private readStorageAuth(): string | null {
+    if (!this.isBrowser) return null;
+    return localStorage.getItem('labcontrol8_auth');
+  }
+
+  private saveAuthToStorage(authHeader: string | null) {
+    if (!this.isBrowser) return;
+    if (authHeader) {
+      localStorage.setItem('labcontrol8_auth', authHeader);
+    } else {
+      localStorage.removeItem('labcontrol8_auth');
+    }
+  }
+
+  private buildBasicAuthHeader(credentials: { correo: string; password: string }): string {
+    const token = btoa(`${credentials.correo}:${credentials.password}`);
+    return `Basic ${token}`;
+  }
+
   login(credentials: { correo: string; password: string }): Observable<Usuario> {
     const url = `${this.config.getUsuariosBaseUrl()}/auth/login`;
-    const demoUser: Usuario = {
-      id: 1,
-      nombre: 'Usuario',
-      apellido: 'Demo',
-      correo: credentials.correo,
-      telefono: '999888777',
-      fechaRegistro: new Date().toISOString().split('T')[0],
-      rol: 'ADMIN'
-    };
     return this.http.post<Usuario>(url, credentials).pipe(
-      catchError(() => of(demoUser)),
       tap(user => {
         this.currentUserSubject.next(user);
         this.saveUserToStorage(user);
+        const authHeader = this.buildBasicAuthHeader(credentials);
+        this.basicAuthHeader = authHeader;
+        this.saveAuthToStorage(authHeader);
       })
     );
   }
 
   register(payload: Partial<Usuario> & { password: string }): Observable<Usuario> {
     const url = `${this.config.getUsuariosBaseUrl()}/usuarios`;
-    const mock: Usuario = {
-      id: Math.floor(Math.random() * 10000),
-      nombre: payload.nombre || 'Nuevo',
-      apellido: payload.apellido || 'Usuario',
-      correo: payload.correo || '',
-      telefono: payload.telefono || '',
-      fechaRegistro: new Date().toISOString().split('T')[0],
-      rol: (payload as any).rol || 'PATIENT'
-    };
     return this.http.post<Usuario>(url, payload).pipe(
-      catchError(() => of(mock)),
       tap(user => {
         this.currentUserSubject.next(user);
         this.saveUserToStorage(user);
+        if (payload.password) {
+          const authHeader = this.buildBasicAuthHeader({ correo: payload.correo || '', password: payload.password });
+          this.basicAuthHeader = authHeader;
+          this.saveAuthToStorage(authHeader);
+        }
       })
     );
   }
 
   forgotPassword(correo: string): Observable<{ message: string }> {
     const url = `${this.config.getUsuariosBaseUrl()}/usuarios/forgot`;
-    return this.http.post<{ message: string }>(url, { correo }).pipe(
-      catchError(() => of({ message: 'Se ha enviado un correo con instrucciones.' }).pipe(delay(300)))
-    );
+    return this.http.post<{ message: string }>(url, { correo });
   }
 
   logout() {
     this.currentUserSubject.next(null);
     this.saveUserToStorage(null);
+    this.basicAuthHeader = null;
+    this.saveAuthToStorage(null);
   }
 
   get currentUserValue(): Usuario | null {
     return this.currentUserSubject.value;
+  }
+
+  getBasicAuthHeader(): string | null {
+    return this.basicAuthHeader;
   }
 
   isLoggedIn(): boolean {

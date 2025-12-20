@@ -13,6 +13,7 @@ describe('AuthService', () => {
 
   beforeEach(() => {
     localStorage.removeItem('labcontrol8_user');
+    localStorage.removeItem('labcontrol8_auth');
     TestBed.configureTestingModule({
       providers: [
         AuthService,
@@ -31,6 +32,7 @@ describe('AuthService', () => {
       httpMock.verify();
     }
     localStorage.removeItem('labcontrol8_user');
+    localStorage.removeItem('labcontrol8_auth');
     TestBed.resetTestingModule();
   });
 
@@ -42,6 +44,8 @@ describe('AuthService', () => {
       expect(service.currentUserValue?.correo).toBe('test@example.com');
       const stored = localStorage.getItem('labcontrol8_user');
       expect(stored).toContain('test@example.com');
+      const authHeader = localStorage.getItem('labcontrol8_auth');
+      expect(authHeader).toBe('Basic ' + btoa('test@example.com:12345678'));
       done();
     });
     const req = httpMock.expectOne(`${baseUrl}/auth/login`);
@@ -57,6 +61,7 @@ describe('AuthService', () => {
     service.logout();
     expect(service.currentUserValue).toBeNull();
     expect(localStorage.getItem('labcontrol8_user')).toBeNull();
+    expect(localStorage.getItem('labcontrol8_auth')).toBeNull();
   });
 
   it('readStorageUser ignora JSON invalido y retorna null', () => {
@@ -88,9 +93,11 @@ describe('AuthService', () => {
     service = TestBed.inject(AuthService);
     httpMock = TestBed.inject(HttpTestingController);
     localStorage.setItem('labcontrol8_user', JSON.stringify({ correo: 'persist' }));
+    localStorage.setItem('labcontrol8_auth', 'Basic persist');
     service.login({ correo: 'demo@example.com', password: '12345678' }).subscribe();
     httpMock.expectOne(`${baseUrl}/auth/login`).flush({ id: 4, correo: 'demo@example.com', rol: 'USER' });
     expect(localStorage.getItem('labcontrol8_user')).toContain('persist'); // saveUserToStorage no ejecuta
+    expect(localStorage.getItem('labcontrol8_auth')).toBe('Basic persist');
   });
 
   it('register realiza POST a /usuarios', () => {

@@ -20,5 +20,11 @@ COPY --from=build /app/dist/labcontrol8/browser/ .
 # Copiar configuración nginx SPA
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
+# Copiar entrypoint para inyectar env vars en runtime
+COPY docker-entrypoint.sh /docker-entrypoint.sh
+RUN chmod +x /docker-entrypoint.sh
+
+ENTRYPOINT ["/docker-entrypoint.sh"]
+
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
