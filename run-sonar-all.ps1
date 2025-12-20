@@ -39,6 +39,13 @@ Assert-Command 'mvn'
 Assert-Command 'npm'
 Assert-Command 'npx'
 
+$mvnSonarArgs = @(
+  'clean',
+  'test',
+  'sonar:sonar',
+  ("-Dsonar.token=$($env:SONAR_TOKEN)")
+)
+
 Write-Host '=== SonarCloud: Frontend ==='
 Invoke-InDir $FrontendDir {
   npm test -- --watch=false --code-coverage --browsers=ChromeHeadless
@@ -47,22 +54,22 @@ Invoke-InDir $FrontendDir {
 
 Write-Host '=== SonarCloud: Backend microservicio-usuarios ==='
 Invoke-InDir (Join-Path $BackendDir 'microservicio-usuarios') {
-  mvn clean test sonar:sonar
+  & mvn @mvnSonarArgs
 }
 
 Write-Host '=== SonarCloud: Backend microservicio_laboratorios ==='
 Invoke-InDir (Join-Path $BackendDir 'microservicio_laboratorios') {
-  mvn clean test sonar:sonar
+  & mvn @mvnSonarArgs
 }
 
 Write-Host '=== SonarCloud: Backend microservicio-reservas ==='
 Invoke-InDir (Join-Path $BackendDir 'microservicio-reservas') {
-  mvn clean test sonar:sonar
+  & mvn @mvnSonarArgs
 }
 
 Write-Host '=== SonarCloud: Backend microservicio-resultados ==='
 Invoke-InDir (Join-Path $BackendDir 'microservicio-resultados') {
-  mvn clean test sonar:sonar
+  & mvn @mvnSonarArgs
 }
 
 Write-Host 'Listo. Revisa los dashboards en SonarCloud (puede demorar 1-2 min en procesar).'
