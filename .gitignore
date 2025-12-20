@@ -45,3 +45,6 @@ demostracionmicroservicios.mp4
 
 # Docker runtime data (no versionar)
 /logging/loki-data/
+
+# SonarScanner (no versionar)
+.scannerwork/
