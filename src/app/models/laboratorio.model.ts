@@ -1,5 +1,5 @@
 // Modelo: Laboratorio
-// Representa un laboratorio clínico
+// Representa un laboratorio clinico
 export interface Laboratorio {
   id?: number;
   nombre: string;
@@ -7,3 +7,4 @@ export interface Laboratorio {
   capacidad?: number;
   encargadoId?: number;
 }
+

@@ -17,11 +17,11 @@ import { UserListComponent } from './users/user-list/user-list.component';
 import { UserFormComponent } from './users/user-form/user-form.component';
 
 export const routes: Routes = [
-  // Rutas de autenticación independientes (sin layout)
+  // Rutas de autenticacion independientes (sin layout)
   { path: 'auth/login', component: LoginComponent },
   { path: 'auth/register', component: RegistroComponent },
   { path: 'auth/forgot-password', component: RecuperarPasswordComponent },
-  // Alias en español
+  // Alias en espanol
   { path: 'auth/registro', component: RegistroComponent },
   { path: 'auth/recuperar', component: RecuperarPasswordComponent },
 
@@ -46,3 +46,4 @@ export const routes: Routes = [
   },
   { path: '**', redirectTo: '' }
 ];
+

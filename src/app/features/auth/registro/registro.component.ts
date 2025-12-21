@@ -34,10 +34,10 @@ export class RegistroComponent {
         password: ['', [
           Validators.required,
           Validators.minLength(8),
-          Validators.pattern(/[A-Z]/), // al menos una mayúscula
-          Validators.pattern(/[a-z]/), // al menos una minúscula
-          Validators.pattern(/[0-9]/), // al menos un número
-          Validators.pattern(/[^A-Za-z0-9]/) // al menos un símbolo
+          Validators.pattern(/[A-Z]/), // al menos una mayuscula
+          Validators.pattern(/[a-z]/), // al menos una minuscula
+          Validators.pattern(/[0-9]/), // al menos un numero
+          Validators.pattern(/[^A-Za-z0-9]/) // al menos un simbolo
         ]],
         confirmPassword: ['', [Validators.required]]
       }, { validators: passwordMatchValidator })
@@ -83,7 +83,7 @@ export class RegistroComponent {
     this.auth.register(payload).subscribe({
       next: () => {
         this.loading = false;
-        this.successMsg = 'Registro exitoso. Ahora puedes iniciar sesión.';
+        this.successMsg = 'Registro exitoso. Ahora puedes iniciar sesion.';
         setTimeout(() => this.router.navigate(['/auth/login']), 1400);
       },
       error: (err) => {
@@ -93,3 +93,4 @@ export class RegistroComponent {
     });
   }
 }
+

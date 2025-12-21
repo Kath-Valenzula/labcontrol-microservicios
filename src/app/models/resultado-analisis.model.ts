@@ -1,5 +1,5 @@
 // Modelo: ResultadoAnalisis
-// Representa un resultado de examen/análisis
+// Representa un resultado de examen/analisis
 export interface ResultadoAnalisis {
   id: number;
   pacienteId: number;
@@ -9,3 +9,4 @@ export interface ResultadoAnalisis {
   resultado: string;
   observaciones?: string;
 }
+

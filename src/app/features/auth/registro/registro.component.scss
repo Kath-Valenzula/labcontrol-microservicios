@@ -25,6 +25,7 @@
   gap: 0.35rem;
   margin-top: 0.4rem;
   color: $muted;
+  flex-wrap: wrap;
 }
 
 .password-meter span {
@@ -55,5 +56,11 @@
 @media (max-width: $bp-tablet) {
   .auth-card {
     padding: 1.25rem;
+  }
+}
+
+@media (max-width: $bp-mobile) {
+  .password-meter span {
+    font-size: 0.8rem;
   }
 }

@@ -14,8 +14,8 @@
             </div>
 
             <div class="mb-3">
-              <label class="form-label" for="ubicacion">Ubicación</label>
-              <input id="ubicacion" title="Ubicación del laboratorio" placeholder="Calle 123, Ciudad" class="form-control" formControlName="ubicacion" />
+              <label class="form-label" for="ubicacion">Ubicacion</label>
+              <input id="ubicacion" title="Ubicacion del laboratorio" placeholder="Calle 123, Ciudad" class="form-control" formControlName="ubicacion" />
               <div class="text-danger" *ngIf="form.controls['ubicacion'].touched && form.controls['ubicacion'].invalid">Este campo es obligatorio.</div>
             </div>
 
@@ -29,7 +29,7 @@
               <input id="encargadoId" type="number" min="1" class="form-control" formControlName="encargadoId" placeholder="Ej: 1" />
             </div>
 
-            <div class="d-flex gap-2">
+            <div class="d-flex gap-2 flex-wrap">
               <button class="btn btn-primary" type="submit">Guardar</button>
               <a class="btn btn-secondary" routerLink="/laboratorios">Cancelar</a>
             </div>

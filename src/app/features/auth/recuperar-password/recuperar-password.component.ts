@@ -32,8 +32,9 @@ export class RecuperarPasswordComponent {
       },
       error: (err) => {
         this.loading = false;
-        this.error = err?.error?.message || 'Error al intentar recuperar contraseña.';
+        this.error = err?.error?.message || 'Error al intentar recuperar contrasena.';
       }
     });
   }
 }
+

@@ -24,5 +24,6 @@ export class ResultListComponent implements OnInit {
 
   edit(id: number) { this.router.navigate(['/resultados', id, 'editar']); }
   create() { this.router.navigate(['/resultados', 'nuevo']); }
-  remove(id: number) { if (!confirm('¿Eliminar resultado?')) return; this.srv.delete(id).subscribe({ next: () => this.load(), error: () => alert('Error al eliminar resultado.') }); }
+  remove(id: number) { if (!confirm('Eliminar resultado?')) return; this.srv.delete(id).subscribe({ next: () => this.load(), error: () => alert('Error al eliminar resultado.') }); }
 }
+

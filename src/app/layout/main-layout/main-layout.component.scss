@@ -18,6 +18,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
+  flex-wrap: wrap;
 }
 
 .lc-brand {
@@ -111,6 +112,7 @@
   display: grid;
   grid-template-columns: 260px 1fr;
   min-height: calc(100vh - 220px);
+  position: relative;
 }
 
 .lc-sidebar {
@@ -189,8 +191,26 @@
 }
 
 @media (max-width: $bp-tablet) {
+  .lc-topbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .lc-topbar > div {
+    width: 100%;
+  }
+
+  .lc-topbar > div:last-child {
+    justify-content: space-between;
+  }
+
   .lc-hero {
     grid-template-columns: 1fr;
+    padding: 1rem 0 1.5rem;
+  }
+
+  .lc-hero h1 {
+    font-size: 1.6rem;
   }
 
   .lc-body {
@@ -210,5 +230,27 @@
 
   .lc-sidebar.collapsed {
     transform: translateX(0);
+  }
+
+  .lc-main {
+    padding: 1.25rem;
+  }
+}
+
+@media (max-width: $bp-mobile) {
+  .lc-brand {
+    font-size: 1.15rem;
+  }
+
+  .lc-hero h1 {
+    font-size: 1.4rem;
+  }
+
+  .lc-hero-text {
+    font-size: 0.95rem;
+  }
+
+  .lc-main {
+    padding: 1rem;
   }
 }

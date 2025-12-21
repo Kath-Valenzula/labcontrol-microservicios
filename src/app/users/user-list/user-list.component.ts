@@ -42,7 +42,8 @@ export class UserListComponent implements OnInit {
   create() { this.router.navigate(['/usuarios', 'nuevo']); }
 
   remove(id: number) {
-    if (!confirm('¿Eliminar usuario? Esta acción no se puede deshacer.')) return;
+    if (!confirm('Eliminar usuario? Esta accion no se puede deshacer.')) return;
     this.srv.delete(id).subscribe({ next: () => this.load(), error: () => alert('Error al eliminar usuario.') });
   }
 }
+

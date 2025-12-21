@@ -42,7 +42,8 @@ export class LabListComponent implements OnInit {
   create() { this.router.navigate(['/laboratorios', 'nuevo']); }
 
   remove(id: number) {
-    if (!confirm('¿Eliminar laboratorio? Esta acción no se puede deshacer.')) return;
+    if (!confirm('Eliminar laboratorio? Esta accion no se puede deshacer.')) return;
     this.srv.delete(id).subscribe({ next: () => this.load(), error: () => alert('Error al eliminar laboratorio.') });
   }
 }
+

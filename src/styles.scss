@@ -73,3 +73,10 @@ body {
   font-weight: 500;
   text-decoration: underline;
 }
+
+@media (max-width: $bp-tablet) {
+  .auth-shell {
+    align-items: flex-start;
+    padding: 1.5rem 0;
+  }
+}

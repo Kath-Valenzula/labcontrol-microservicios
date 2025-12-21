@@ -44,6 +44,12 @@
   display: flex;
   justify-content: space-between;
   color: $muted;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.75rem;
+}
+
+.info span {
+  overflow-wrap: anywhere;
 }
 
 .eyebrow {
@@ -52,4 +58,27 @@
   color: $muted;
   font-size: 0.85rem;
   margin: 0;
+}
+
+.profile-actions {
+  flex-wrap: wrap;
+}
+
+@media (max-width: $bp-mobile) {
+  .profile-card {
+    padding: 1rem;
+  }
+
+  .info div {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .profile-actions {
+    flex-direction: column;
+  }
+
+  .profile-actions .btn {
+    width: 100%;
+  }
 }
