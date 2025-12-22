@@ -40,6 +40,9 @@
 
 .table-responsive {
   -webkit-overflow-scrolling: touch;
+  overflow-x: auto;
+  width: 100%;
+  max-width: 100%;
 }
 
 @media (max-width: $bp-tablet) {
@@ -49,7 +52,11 @@
 
   .lc-card-head {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch;
+  }
+
+  .lc-card-head > div {
+    width: 100%;
   }
 }
 

@@ -7,7 +7,11 @@
 }
 
 .lc-header {
-  background: linear-gradient(135deg, $primary 0%, darken($primary, 8%) 55%, $secondary 100%);
+  background-color: $primary;
+  background-image: linear-gradient(135deg, $primary 0%, darken($primary, 8%) 55%, $secondary 100%), url("/assets/images/dna-bg.svg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   color: #fff;
   padding: 1.25rem 0 0;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
@@ -25,6 +29,17 @@
   font-weight: 700;
   letter-spacing: 0.4px;
   font-size: 1.35rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.lc-brand::before {
+  content: "";
+  width: 34px;
+  height: 34px;
+  display: inline-block;
+  background: url("/assets/images/logo-mark.svg") center / contain no-repeat;
 }
 
 .lc-claim {
@@ -184,6 +199,7 @@
 
 .lc-main {
   padding: 1.75rem;
+  min-width: 0;
 }
 
 .separator {

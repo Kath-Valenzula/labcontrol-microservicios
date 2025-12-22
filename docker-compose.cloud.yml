@@ -1,0 +1,95 @@
+services:
+  frontend:
+    build:
+      context: .
+    container_name: labcontrol8-frontend
+    ports:
+      - "${FRONTEND_PORT:-4200}:80"
+    environment:
+      - API_BASE_URL=/api
+      - API_USUARIOS=/api
+      - API_LABORATORIOS=/api
+      - API_RESULTADOS=/api
+    depends_on:
+      - microservicio-usuarios
+      - microservicio-laboratorios
+      - microservicio-reservas
+      - microservicio-resultados
+      - loki
+      - promtail
+
+  microservicio-usuarios:
+    build:
+      context: ${BACKEND_ROOT}/microservicio-usuarios
+    container_name: ms-usuarios
+    ports:
+      - "${USUARIOS_PORT:-8080}:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:oracle:thin:@${ORACLE_TNS}?TNS_ADMIN=/wallet
+      - SPRING_DATASOURCE_USERNAME=${ORACLE_USER}
+      - SPRING_DATASOURCE_PASSWORD=${ORACLE_PASSWORD}
+      - TNS_ADMIN=/wallet
+    volumes:
+      - "${WALLET_PATH}:/wallet:ro"
+
+  microservicio-laboratorios:
+    build:
+      context: ${BACKEND_ROOT}/microservicio_laboratorios
+    container_name: ms-laboratorios
+    ports:
+      - "${LABS_PORT:-8081}:8081"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:oracle:thin:@${ORACLE_TNS}?TNS_ADMIN=/wallet
+      - SPRING_DATASOURCE_USERNAME=${ORACLE_USER}
+      - SPRING_DATASOURCE_PASSWORD=${ORACLE_PASSWORD}
+      - TNS_ADMIN=/wallet
+    volumes:
+      - "${WALLET_PATH}:/wallet:ro"
+
+  microservicio-reservas:
+    build:
+      context: ${BACKEND_ROOT}/microservicio-reservas
+    container_name: ms-reservas
+    ports:
+      - "${RESERVAS_PORT:-8083}:8083"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:oracle:thin:@${ORACLE_TNS}?TNS_ADMIN=/wallet
+      - SPRING_DATASOURCE_USERNAME=${ORACLE_USER}
+      - SPRING_DATASOURCE_PASSWORD=${ORACLE_PASSWORD}
+      - TNS_ADMIN=/wallet
+    volumes:
+      - "${WALLET_PATH}:/wallet:ro"
+
+  microservicio-resultados:
+    build:
+      context: ${BACKEND_ROOT}/microservicio-resultados
+    container_name: ms-resultados
+    ports:
+      - "${RESULTADOS_PORT:-8084}:8084"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:oracle:thin:@${ORACLE_TNS}?TNS_ADMIN=/wallet
+      - SPRING_DATASOURCE_USERNAME=${ORACLE_USER}
+      - SPRING_DATASOURCE_PASSWORD=${ORACLE_PASSWORD}
+      - TNS_ADMIN=/wallet
+    volumes:
+      - "${WALLET_PATH}:/wallet:ro"
+
+  loki:
+    image: grafana/loki:2.9.4
+    container_name: loki
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/local-config.yaml
+    volumes:
+      - "./logging/loki-config.yml:/etc/loki/local-config.yaml:ro"
+      - "./logging/loki-data:/tmp/loki"
+
+  promtail:
+    image: grafana/promtail:2.9.4
+    container_name: promtail
+    command: -config.file=/etc/promtail/config.yml
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "./logging/promtail-config.yml:/etc/promtail/config.yml:ro"
+    depends_on:
+      - loki

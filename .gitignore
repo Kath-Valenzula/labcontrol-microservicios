@@ -48,3 +48,6 @@ demostracionmicroservicios.mp4
 
 # SonarScanner (no versionar)
 .scannerwork/
+
+# Environment secrets
+.env
